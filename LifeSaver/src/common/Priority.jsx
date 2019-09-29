@@ -1,35 +1,46 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { makeStyles, Paper, Typography } from '@material-ui/core'
 
-class Urgency extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-        
-    }
+const useStyles = makeStyles(theme => ({
+    root: {
+      padding: theme.spacing(1, 1),
+    },
+}));
 
-    getBackgroundColor(level) {
-        switch (level) {
-            case "High":
-                return { backgroundColor: "red" };
-            case "Medium":
-                return { backgroundColor: "yellow" };
-            case "Low":
-                return { backgroundColor: "lightblue" };
-            default:
-                return {};
-        }
-    }
+export const PriorityLevel = {
+    LOW: "Low",
+    MEDIUM: "Medium",
+    HIGH: "High"
+};
 
-    render() { 
-        let style = this.getBackgroundColor(this.props.level);
-        style.maxWidth = "500px"
-        return (
-        <dir>
-            <body style={style}>
-            <h2>{this.props.level} Priority</h2>
-            </body>
-        </dir>);
+function getStyleForLevel(level) {
+    switch(level) {
+        case PriorityLevel.LOW:
+            return {
+                backgroundColor: "lightblue",
+                color: "black"
+            };
+        case PriorityLevel.MEDIUM:
+                return {
+                    backgroundColor: "yellow",
+                    color: "black"
+                };
+        case PriorityLevel.HIGH:
+                return {
+                    backgroundColor: "red",
+                    color: "white"
+                };
+        default:
+            return {};
     }
 }
- 
-export default Urgency;
+
+export default function Priority(props) {
+    const classes = useStyles();
+
+    return (
+        <Paper className={classes.root} style={getStyleForLevel(props.level)}>
+            <Typography variant="h6">{props.level} Priority</Typography>
+        </Paper>
+    );
+}

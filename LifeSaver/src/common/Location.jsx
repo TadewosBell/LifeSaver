@@ -1,20 +1,23 @@
-import React, { Component } from '../../node_modules/react';
+import React from '../../node_modules/react';
+import { makeStyles, Card, CardContent, Typography } from '@material-ui/core'
 import MapWidget from './MapWidget';
 
-class Location extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
+const useStyles = makeStyles({
+    card: {
     }
-    render() { 
-        return (
-        <dir>
-        <h2>Location:</h2>
-        <p>{this.props.address}</p>
-        <p>{this.props.details}</p>
-        <MapWidget address={this.props.address}/>
-        </dir>);
-    }
+});
+
+export default function Location(props) {
+    const classes = useStyles();
+
+    return (
+        <Card className={classes.card}>
+            <CardContent>
+                <Typography variant="h5" color="textSecondary" gutterBottom>Location</Typography>
+                <Typography variant="h6" gutterBottom>{props.address}</Typography>
+                <Typography variant="body1" gutterBottom>Details: {props.details}</Typography>
+                <MapWidget address={props.address}/>
+            </CardContent>
+        </Card>
+    );
 }
- 
-export default Location;

@@ -1,5 +1,6 @@
 import React, { Component } from '../../node_modules/react';
-import Priority from "./Priority";
+import { makeStyles, Card, CardContent, Typography } from '@material-ui/core'
+import Priority, {PriorityLevel} from "./Priority";
 import Service from "./Service";
 import Location from "./Location";
 import DateTime from "./DateTime";
@@ -9,7 +10,7 @@ class CallEvent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            urgency: "High", 
+            priority: PriorityLevel.HIGH, 
             title: "Tree down on power line", 
             service: "Electrical",
             address: "1000 Hilltop Cir, Baltimore, MD 21250",
@@ -19,14 +20,17 @@ class CallEvent extends Component {
             phoneNumber: "(555) 555-5555"
         }
     }
-    render() { 
+    render() {
         return (
         <div>
-            <h1>{this.state.title}</h1>
-            <Priority level={this.state.urgency}/>
-            <Service type={this.state.service}/>
-            <DateTime dateTime={this.state.dateTime} />
-            <p>{this.state.description}</p>
+            <Card className={{card: {}}}>
+                <Priority level={this.state.priority}/>
+                <CardContent>
+                    <Typography variant="h4" gutterBottom>{this.state.title}<Service type={this.state.service}/></Typography>
+                    <DateTime dateTime={this.state.dateTime} />
+                    <Typography variant="body1">{this.state.description}</Typography>
+                </CardContent>
+            </Card>
             <Location address={this.state.address} details={this.state.locationDetails} />
             <CallerContact phoneNumber={this.state.phoneNumber}/>
         </div>

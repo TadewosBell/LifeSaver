@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { makeStyles, Typography, Card, CardContent } from '@material-ui/core';
 
-class CallerContact extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
+const useStyles = makeStyles({
+    card: {
     }
-    render() { 
-        return (<div>
-            <h2>Caller Contact Details:</h2>
-            <p><b>Phone: </b>{this.props.phoneNumber}</p>
-            </div>);
-    }
+});
+
+export default function CallerContact(props) {
+    const classes = useStyles();
+
+    return (
+        <Card className={classes.card}>
+            <CardContent>
+                <Typography variant="h5" gutterBottom>Caller</Typography>
+                <Typography variant="body1" gutterBottom><b>Phone: </b>{props.phoneNumber}</Typography>
+            </CardContent>
+        </Card>
+    );
 }
- 
-export default CallerContact;

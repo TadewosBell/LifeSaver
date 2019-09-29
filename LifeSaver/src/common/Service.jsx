@@ -1,16 +1,14 @@
-import React, { Component } from '../../node_modules/react';
+import React from 'react';
+import { makeStyles, Chip } from '@material-ui/core'
 
-class Service extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
+const useStyles = makeStyles(theme => ({
+    root: {
+        margin: theme.spacing(1),
     }
-    render() { 
-        return (
-        <div>
-            <p><b>Service Type: </b>{this.props.type}</p>
-        </div>);
-    }
+}));
+
+export default function Service(props) {
+    const classes = useStyles();
+
+    return (<Chip label={props.type} className={classes.root} />);
 }
- 
-export default Service;

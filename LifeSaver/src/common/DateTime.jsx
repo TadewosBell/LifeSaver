@@ -1,13 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Typography } from '@material-ui/core'
 
-class DateTime extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {  }
-    }
-    render() { 
-        return (<div><p><b>Call Time: </b>{this.props.dateTime}</p></div>);
-    }
+export default function DateTime(props) {
+    return (<Typography>{props.dateTime}</Typography>);
 }
- 
-export default DateTime;
