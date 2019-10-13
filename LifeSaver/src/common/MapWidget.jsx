@@ -5,5 +5,5 @@ function getGoogleMapsUrl(address) {
 }
 
 export default function MapWidget(props) {  
-    return (<iframe title="Map Widget" width="600" height="500" id="gmap_canvas" src={getGoogleMapsUrl(props.address)} frameborder="0" scrolling="no" marginheight="0" marginwidth="0"/>);
+    return (<iframe title="Map Widget" width="600" height="500" id="gmap_canvas" src={getGoogleMapsUrl(props.address)} frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"/>);
 }

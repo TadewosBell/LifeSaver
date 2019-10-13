@@ -46,3 +46,7 @@ export function getUserName(userName, onSuccess, onFailure) {
     const getString = `GetRequest/${userName}`;
     performHTTPRequest('GET', getString, null, onSuccess, onFailure);
   }
+
+export function getCallByUser(userName, onSuccess, onFailure) {
+    performHTTPRequest('GET', `CurrentCall/${userName}`, null, onSuccess, onFailure);
+}
