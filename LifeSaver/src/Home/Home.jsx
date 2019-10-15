@@ -6,6 +6,7 @@ import {
 import LandingPage from './LandingPage';
 import { withRouter } from '../../node_modules/react-router';
 import DashBoard from '../Dashboard/DashBoard';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 class HomePage extends Component {
@@ -29,16 +30,19 @@ class HomePage extends Component {
   render() {
       const { loggedIn } = this.state;
     return (
-      <HashRouter>
-        <div className="content">
-          <Route exact path="/"
-          component={() => <LandingPage redirect={this.redirect} history={this.props.history} />} />
-          {
-              loggedIn
-              && <Route path="/DashBoard/" component={DashBoard} />
-          }
-        </div>
-      </HashRouter>
+      <React.Fragment>
+        <CssBaseline />
+        <HashRouter>
+          <div className="content">
+            <Route exact path="/"
+            component={() => <LandingPage redirect={this.redirect} history={this.props.history} />} />
+            {
+                loggedIn
+                && <Route path="/DashBoard/" component={DashBoard} />
+            }
+          </div>
+        </HashRouter>
+    </React.Fragment>
     );
   }
 }
