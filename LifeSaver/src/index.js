@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CallForm from './CallDesk/CallForm';
+import HomePage from './Home/Home';
 
 ReactDOM.render(
-  <CallForm />,
+  <HomePage />,
   document.getElementById('root')
 );
