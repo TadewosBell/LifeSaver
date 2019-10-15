@@ -32,6 +32,9 @@ fetch(url, {
 });
 }
 
+export async function submitCall(user, call){
+    return true;
+}
 
 export function getJson(token, onSuccess, onFailure){
     const postData = {

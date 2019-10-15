@@ -1,11 +1,11 @@
 // Helper styles for demo
-//import './helper.css';
 import { MoreResources, DisplayFormikState } from './helper';
 
 import React from 'react';
-import { render } from 'react-dom';
 import { Formik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
+
+
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 import MapWidget from "../common/Location";
-
+import { submitCall } from "../Client/LifeSaverClient";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -78,6 +78,16 @@ function now(){
   + pad(time.getMinutes());
 }
 
+const submitFunc = async (values, { setSubmitting }) => {
+  let toSubmit = JSON.stringify(values, null, 2)
+  if(await submitCall("test", toSubmit)){
+    alert(toSubmit)
+  }
+  else{
+    alert("Error submitting form");
+  }
+}
+
 console.log((new Date()).toISOString())
 
   return (
@@ -97,12 +107,7 @@ console.log((new Date()).toISOString())
         callerName: '',
         callerNum: ''
       }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 500);
-      }}
+      onSubmit={submitFunc}
       validationSchema={Yup.object().shape({
         title: Yup.string()
           .required('Required'),
