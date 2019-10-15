@@ -354,8 +354,7 @@ console.log((new Date()).toISOString())
                 <MapWidget address={values.address} />
               </Box>
             </Box>
-
-            <DisplayFormikState {...props} />
+                  
           </form>
         );
       }}
@@ -363,5 +362,7 @@ console.log((new Date()).toISOString())
     </Container>
   </div>
 )};
+
+//            <DisplayFormikState {...props} />
 
 export default CallForm;
