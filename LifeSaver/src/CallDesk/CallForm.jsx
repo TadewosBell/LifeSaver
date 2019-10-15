@@ -41,6 +41,9 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
   },
+  map:{
+    margin: theme.spacing(3)
+  }
 }));
 
 const priorities = [
@@ -158,199 +161,198 @@ console.log((new Date()).toISOString())
               <div className="input-feedback">{errors.title}</div>
             )} */}
             <Box>
-            <TextField
-              id="description"
-              placeholder="Describe the scenario"
-              type="text"
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.description && touched.description}
-              required
-              label="Description"
-              fullWidth
-              style={{ margin: 8 }}
-              fontSize={400}
-              multiline
-              rows="4"
-              margin="normal"
-              variant="outlined"
-            />
-            </Box>
-            
-            <Box display="flex" justifyContent="center">
-            <TextField
-              id="category"
-              select
-              required
-              label="Select"
-              name = "category"
-              className={classes.textField}
-              value={values.category}
-              onChange={handleChange}
-              onBlur={ event => {
-                event.target.name = "category"
-                handleBlur(event);
-              }}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              error={errors.category && touched.category}
-              helperText="Please select a category"
-              margin="normal"
-              variant="outlined"
+              <TextField
+                id="description"
+                placeholder="Describe the scenario"
+                type="text"
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.description && touched.description}
+                required
+                label="Description"
+                fullWidth
+                style={{ margin: 8 }}
+                multiline
+                rows="4"
+                margin="normal"
+                variant="outlined"
+              />
+              </Box>
+              
+              <Box display="flex" justifyContent="center">
+              <TextField
+                id="category"
+                select
+                required
+                label="Category"
+                name = "category"
+                className={classes.textField}
+                value={values.category}
+                onChange={handleChange}
+                onBlur={ event => {
+                  event.target.name = "category"
+                  handleBlur(event);
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                error={errors.category && touched.category}
+                helperText="Please select a category"
+                margin="normal"
+                variant="outlined"
+                >
+                {categories.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                id="priority"
+                select
+                required
+                label="Priority"
+                name = "priority"
+                className={classes.textField}
+                value={values.priority}
+                onChange={handleChange}
+                onBlur={ event => {
+                  event.target.name = "priority"
+                  handleBlur(event);
+                }}
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                error={errors.priority && touched.priority}
+                helperText="Please select a priority"
+                margin="normal"
+                variant="outlined"
+                >
+                {priorities.map(option => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </TextField>
+              </Box>
+
+              <Box>
+              <TextField
+                id="timeReceived"
+                label="Time"
+                type="datetime-local"
+                value={values.timeReceived}
+                className={classes.textField}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                error={errors.timeReceived && touched.timeReceived} //This will still work, as material ui will only save valid dates
+              />
+              <Button variant="outlined" 
+                className={classes.button}
+                id="now"
+                type="button"
+                onClick={() => {setFieldValue('timeReceived', now())}}
+                margin="normal"
               >
-              {categories.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="priority"
-              select
-              required
-              label="Select"
-              name = "priority"
-              className={classes.textField}
-              value={values.priority}
-              onChange={handleChange}
-              onBlur={ event => {
-                event.target.name = "priority"
-                handleBlur(event);
-              }}
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              error={errors.priority && touched.priority}
-              helperText="Please select a priority"
-              margin="normal"
-              variant="outlined"
+                Now
+              </Button>
+              </Box>
+
+              <Box>
+              <TextField
+                id="callerName"
+                placeholder="Caller Name"
+                type="text"
+                value={values.callerName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.callerName && touched.callerName}
+                label="Caller Name"
+                className={classes.textField}
+                margin="normal"
+              />
+
+              <MuiPhoneNumber 
+                id="callerNum"
+                defaultCountry={'us'} 
+                value={values.callerNum}
+                onChange={value=>{
+                  setFieldValue('callerNum', value.replace(/\D/g,''))
+                }}
+                onBlur={handleBlur}
+                label="Caller's Phone Number"
+                margin="normal"
+              />
+              </Box>
+              <Box>
+              <TextField
+                id="address"
+                placeholder="Where is it happening?"
+                type="text"
+                value={values.address}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.address && touched.address}
+                label="Address"
+                fullWidth
+                style={{ margin: 8 }}
+                margin="normal"
+              />
+              </Box>
+              <Box>
+              <TextField
+                id="locationNotes"
+                placeholder="Special hazards, landmarks, etc."
+                type="text"
+                value={values.locationNotes}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={errors.locationNotes && touched.locationNotes}
+                label="Location Notes"
+                multiline
+                rows="2"
+                margin="normal"
+                variant="outlined"
+                fullWidth
+                style={{ margin: 8 }}
+              />
+              </Box>        
+              
+              <Box display="flex" justifyContent="center">
+              <Button variant="outlined" 
+                className={classes.button}
+                type="button"
+                onClick={handleReset}
+                disabled={!dirty || isSubmitting}
+                variant="contained"
               >
-              {priorities.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-            </Box>
+                Reset
+              </Button>
 
-            <Box>
-            <TextField
-              id="timeReceived"
-              label="Time"
-              type="datetime-local"
-              value={values.timeReceived}
-              className={classes.textField}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-              error={errors.timeReceived && touched.timeReceived} //This will still work, as material ui will only save valid dates
-            />
-            <Button variant="outlined" 
-              className={classes.button}
-              id="now"
-              type="button"
-              onClick={() => {setFieldValue('timeReceived', now())}}
-              margin="normal"
-            >
-              Now
-            </Button>
-            </Box>
+              <Button variant="outlined" 
+                className={classes.button}
+                type="submit"
+                disabled={isSubmitting}
+                variant="contained" 
+                color="primary"
+              >
+                Submit
+              </Button>
+              </Box>
+              </Box>
 
-            <Box>
-            <TextField
-              id="callerName"
-              placeholder="Caller Name"
-              type="text"
-              value={values.callerName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.callerName && touched.callerName}
-              label="Caller Name"
-              className={classes.textField}
-              margin="normal"
-            />
-
-            <MuiPhoneNumber 
-              id="callerNum"
-              defaultCountry={'us'} 
-              value={values.callerNum}
-              onChange={value=>{
-                setFieldValue('callerNum', value.replace(/\D/g,''))
-              }}
-              onBlur={handleBlur}
-              label="Caller's Phone Number"
-              margin="normal"
-            />
-            </Box>
-            <Box>
-            <TextField
-              id="address"
-              placeholder="Address"
-              type="text"
-              value={values.address}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.address && touched.address}
-              label="Address"
-              fullWidth
-              style={{ margin: 8 }}
-              margin="normal"
-            />
-            </Box>
-            <Box>
-            <TextField
-              id="locationNotes"
-              placeholder="Describe the Location..."
-              type="text"
-              value={values.locationNotes}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={errors.locationNotes && touched.locationNotes}
-              label="Location Notes"
-              multiline
-              rows="2"
-              margin="normal"
-              variant="outlined"
-              fullWidth
-              style={{ margin: 8 }}
-            />
-            </Box>        
-            
-            <Box display="flex" justifyContent="center">
-            <Button variant="outlined" 
-              className={classes.button}
-              type="button"
-              onClick={handleReset}
-              disabled={!dirty || isSubmitting}
-              variant="contained"
-            >
-              Reset
-            </Button>
-
-            <Button variant="outlined" 
-              className={classes.button}
-              type="submit"
-              disabled={isSubmitting}
-              variant="contained" 
-              color="primary"
-            >
-              Submit
-            </Button>
-            </Box>
-            </Box>
-
-            <Box margin="normal">
-            <MapWidget address={values.address} />
-            </Box>
+              <Box margin="normal" bgcolor="white.300" className={classes.map}>
+                <MapWidget address={values.address} />
+              </Box>
             </Box>
 
             <DisplayFormikState {...props} />
