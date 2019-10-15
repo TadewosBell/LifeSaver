@@ -4,7 +4,7 @@ import { MoreResources, DisplayFormikState } from './helper';
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Formik } from 'formik';
+import { Formik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 
 import clsx from 'clsx';
@@ -13,6 +13,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiPhoneNumber from 'material-ui-phone-number'
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+
+import MapWidget from "../common/Location";
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -29,6 +34,12 @@ const useStyles = makeStyles(theme => ({
   },
   menu: {
     width: 200,
+  },
+  title:{
+    fontSize:50
+  },
+  button: {
+    margin: theme.spacing(1),
   },
 }));
 
@@ -68,19 +79,20 @@ console.log((new Date()).toISOString())
 
   return (
   <div className="call-form">
+    <Container>
     <Formik
       initialValues={{ 
-        title: 'title',
-        description: 'description',
+        title: '',
+        description: '',
         category: categories[0],
-        priority: 'priority',
+        priority: priorities[0],
         timeReceived: now(),
-        address: 'address',
-        x_coord: 'x_coord',
-        y_coord: 'y_coord',
-        locationNotes: 'locationNotes',
-        callerName: 'callerName',
-        callerNum: 'callerNum'
+        address: '',
+        x_coord: null,
+        y_coord: null,
+        locationNotes: '',
+        callerName: '',
+        callerNum: ''
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
@@ -99,6 +111,10 @@ console.log((new Date()).toISOString())
         .required('Required'),
         timeReceived: Yup.string()
         .required('Required'),
+        address: Yup.string(),
+        locationNotes: Yup.string(),
+        callerName: Yup.string(),
+        callerNum: Yup.string()
       })}
     >
       {props => {
@@ -116,6 +132,8 @@ console.log((new Date()).toISOString())
         } = props;
         return (
           <form /*className={classes.container}*/ onSubmit={handleSubmit}>
+            <Box display="flex" flexDirection="row">
+            <Box>
             <TextField
               id="title"
               placeholder="Summarize the Call"
@@ -126,14 +144,20 @@ console.log((new Date()).toISOString())
               error={errors.title && touched.title}
               required
               label="Title"
-              className={classes.textField}
               margin="normal"
+              fullWidth
+              style={{ margin: 8 }}
+              InputProps={{
+                classes: {
+                  input: classes.title,
+                },
+              }}
             />
 
             {/* {errors.title && touched.title && (
               <div className="input-feedback">{errors.title}</div>
             )} */}
-
+            <Box>
             <TextField
               id="description"
               placeholder="Describe the scenario"
@@ -144,13 +168,17 @@ console.log((new Date()).toISOString())
               error={errors.description && touched.description}
               required
               label="Description"
-              className={classes.textField}
+              fullWidth
+              style={{ margin: 8 }}
+              fontSize={400}
               multiline
               rows="4"
               margin="normal"
               variant="outlined"
             />
-
+            </Box>
+            
+            <Box display="flex" justifyContent="center">
             <TextField
               id="category"
               select
@@ -180,7 +208,6 @@ console.log((new Date()).toISOString())
                 </MenuItem>
               ))}
             </TextField>
-
             <TextField
               id="priority"
               select
@@ -210,7 +237,9 @@ console.log((new Date()).toISOString())
                 </MenuItem>
               ))}
             </TextField>
+            </Box>
 
+            <Box>
             <TextField
               id="timeReceived"
               label="Time"
@@ -219,6 +248,7 @@ console.log((new Date()).toISOString())
               className={classes.textField}
               onChange={handleChange}
               onBlur={handleBlur}
+              required
               InputLabelProps={{
                 shrink: true,
               }}
@@ -229,64 +259,24 @@ console.log((new Date()).toISOString())
               id="now"
               type="button"
               onClick={() => {setFieldValue('timeReceived', now())}}
+              margin="normal"
             >
               Now
             </Button>
-            
-            <input
-              id="address"
-              placeholder="Enter your email"
-              type="text"
-              value={values.address}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={
-                errors.email && touched.email ? 'text-input error' : 'text-input'
-              }
-            />
-            <input
-              id="x_coord"
-              placeholder="Enter your email"
-              type="text"
-              value={values.x_coord}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={
-                errors.email && touched.email ? 'text-input error' : 'text-input'
-              }
-            />
-            <input
-              id="y_coord"
-              placeholder="Enter your email"
-              type="text"
-              value={values.y_coord}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={
-                errors.email && touched.email ? 'text-input error' : 'text-input'
-              }
-            />
-           <input
-              id="locationNotes"
-              placeholder="Enter your email"
-              type="text"
-              value={values.locationNotes}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={
-                errors.email && touched.email ? 'text-input error' : 'text-input'
-              }
-            />
-           <input
+            </Box>
+
+            <Box>
+            <TextField
               id="callerName"
-              placeholder="Enter your email"
+              placeholder="Caller Name"
               type="text"
               value={values.callerName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={
-                errors.email && touched.email ? 'text-input error' : 'text-input'
-              }
+              error={errors.callerName && touched.callerName}
+              label="Caller Name"
+              className={classes.textField}
+              margin="normal"
             />
 
             <MuiPhoneNumber 
@@ -298,27 +288,77 @@ console.log((new Date()).toISOString())
               }}
               onBlur={handleBlur}
               label="Caller's Phone Number"
+              margin="normal"
             />
-
-            <button
+            </Box>
+            <Box>
+            <TextField
+              id="address"
+              placeholder="Address"
+              type="text"
+              value={values.address}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.address && touched.address}
+              label="Address"
+              fullWidth
+              style={{ margin: 8 }}
+              margin="normal"
+            />
+            </Box>
+            <Box>
+            <TextField
+              id="locationNotes"
+              placeholder="Describe the Location..."
+              type="text"
+              value={values.locationNotes}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={errors.locationNotes && touched.locationNotes}
+              label="Location Notes"
+              multiline
+              rows="2"
+              margin="normal"
+              variant="outlined"
+              fullWidth
+              style={{ margin: 8 }}
+            />
+            </Box>        
+            
+            <Box display="flex" justifyContent="center">
+            <Button variant="outlined" 
+              className={classes.button}
               type="button"
-              className="outline"
               onClick={handleReset}
               disabled={!dirty || isSubmitting}
+              variant="contained"
             >
               Reset
-            </button>
-            <button type="submit" disabled={isSubmitting}>
+            </Button>
+
+            <Button variant="outlined" 
+              className={classes.button}
+              type="submit"
+              disabled={isSubmitting}
+              variant="contained" 
+              color="primary"
+            >
               Submit
-            </button>
+            </Button>
+            </Box>
+            </Box>
+
+            <Box margin="normal">
+            <MapWidget address={values.address} />
+            </Box>
+            </Box>
 
             <DisplayFormikState {...props} />
           </form>
         );
       }}
     </Formik>
-
-    <MoreResources />
+    </Container>
   </div>
 )};
 
