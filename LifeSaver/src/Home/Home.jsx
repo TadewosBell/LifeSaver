@@ -5,7 +5,9 @@ import {
 } from '../../node_modules/react-router-dom';
 import LandingPage from './LandingPage';
 import { withRouter } from '../../node_modules/react-router';
+import Register from '../Login/Register';
 import DashBoard from '../Dashboard/DashBoard';
+
 
 
 class HomePage extends Component {
@@ -33,6 +35,7 @@ class HomePage extends Component {
         <div className="content">
           <Route exact path="/"
           component={() => <LandingPage redirect={this.redirect} history={this.props.history} />} />
+          <Route path="/Login/Register" component={Register} />
           {
               loggedIn
               && <Route path="/DashBoard/" component={DashBoard} />

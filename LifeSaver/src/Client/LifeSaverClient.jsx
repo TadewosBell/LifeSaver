@@ -41,6 +41,18 @@ export function getJson(token, onSuccess, onFailure){
     performHTTPRequest('POST', 'JsonObject', postData, onSuccess, onFailure);
 }
 
+export function signUp(firstName, lastName, email, password, onSuccess, onFailure){
+    const postData = {
+        firstName,
+        lastName,
+        email,
+        password,
+    }
+
+    performHTTPRequest('POST', 'SignUp', postData, onSuccess, onFailure);
+}
+
+
 export function getUserName(userName, onSuccess, onFailure) {
 
     const getString = `GetRequest/${userName}`;
