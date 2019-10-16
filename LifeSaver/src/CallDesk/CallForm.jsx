@@ -3,6 +3,7 @@ import { MoreResources, DisplayFormikState } from './helper';
 
 import React from 'react';
 import { Formik, yupToFormErrors } from 'formik';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import * as Yup from 'yup';
 
 
@@ -80,12 +81,16 @@ function now(){
 
 const submitFunc = async (values, { setSubmitting }) => {
   let toSubmit = JSON.stringify(values, null, 2)
-  if(await submitCall("test", toSubmit)){
-    alert(toSubmit)
-  }
-  else{
-    alert("Error submitting form");
-  }
+  let waitingOn= await submitCall("test", toSubmit)
+  setTimeout( () =>{
+    if(waitingOn){
+        alert(toSubmit);
+      }
+      else{
+        alert("Error submitting form");
+      }
+      setSubmitting(false);
+    }, 3000);
 }
 
 console.log((new Date()).toISOString())
@@ -139,7 +144,15 @@ console.log((new Date()).toISOString())
           setFieldValue,
         } = props;
         return (
+
+
           <form /*className={classes.container}*/ onSubmit={handleSubmit}>
+            {isSubmitting ? (
+              <LinearProgress/>
+            ) : (
+              <LinearProgress variant="determinate" value={0}/>
+            )}
+            
             <Box display="flex" flexDirection="row">
             <Box>
             <TextField
@@ -267,6 +280,7 @@ console.log((new Date()).toISOString())
                 type="button"
                 onClick={() => {setFieldValue('timeReceived', now())}}
                 margin="normal"
+                color="primary"
               >
                 Now
               </Button>
