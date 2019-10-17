@@ -1,5 +1,6 @@
 import React, { Component } from '../../node_modules/react';
 import { getJson, getUserName } from '../Client/LifeSaverClient';
+import CallEvent from '../FirstResponder/CallEvent';
 
 class DashBoard extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ class DashBoard extends Component {
         const { userName } = this.state;
         return ( 
             <div>
-                <h1>Hello: {userName}</h1>
+                <h1>Current Call</h1>
+                <CallEvent />
             </div>
          );
     }
