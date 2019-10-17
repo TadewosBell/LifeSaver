@@ -1,5 +1,5 @@
 const LIFESAVER_ENDPOINTS = {
-    DEV_ENV: 'http://localhost:5000/',
+    DEV_ENV: 'http://localhost:5000/', //https://cors-anywhere.herokuapp.com/
     PROD_ENV: '',
   };
   
@@ -57,6 +57,10 @@ async function request(method, path, jsonData) {
 
 export function getMissions() {
     return request('GET', 'Missions');
+}
+
+export function postCall(call) {
+    return request('POST', 'Calls', call);
 }
 
 export async function submitCall(user, call){

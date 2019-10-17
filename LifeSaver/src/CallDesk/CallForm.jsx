@@ -18,7 +18,8 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 import MapWidget from "../common/Location";
-import { submitCall } from "../Client/LifeSaverClient";
+import { submitCall, postCall } from "../Client/LifeSaverClient";
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -71,6 +72,16 @@ function pad(number) {
 }
 
 function now(){
+  return (new Date()).toISOString()
+  // let time = (new Date())
+  // return time.getFullYear() + "-" 
+  // + pad(time.getMonth() + 1) + "-" 
+  // + pad(time.getDate()) + "T" 
+  // + pad(time.getHours()) + ":" 
+  // + pad(time.getMinutes());
+}
+
+function getDateString(dateString){
   let time = (new Date())
   return time.getFullYear() + "-" 
   + pad(time.getMonth() + 1) + "-" 
@@ -80,9 +91,18 @@ function now(){
 }
 
 const submitFunc = async (values, { setSubmitting }) => {
-  let toSubmit = JSON.stringify(values, null, 2)
-  let waitingOn= await submitCall("test", toSubmit)
-  setTimeout( () =>{
+  alert("sent")
+
+  let copy = Object.assign({}, values)
+  let address = copy.address;
+  let details = copy.locationDetails;
+  let coordinates = [10, 12];
+  delete copy.address;
+  delete copy.locationDetails;
+  //delete copy.coordinates;
+  copy.location = {address, coordinates, details};
+  let toSubmit = JSON.stringify(copy, null, 2)
+  let waitingOn= await postCall(toSubmit)
     if(waitingOn){
         alert(toSubmit);
       }
@@ -90,7 +110,6 @@ const submitFunc = async (values, { setSubmitting }) => {
         alert("Error submitting form");
       }
       setSubmitting(false);
-    }, 3000);
 }
 
 console.log((new Date()).toISOString())
@@ -104,13 +123,13 @@ console.log((new Date()).toISOString())
         description: '',
         category: categories[0],
         priority: priorities[0],
-        timeReceived: now(),
+        //timeReceived: now(),
         address: '',
-        x_coord: null,
-        y_coord: null,
-        locationNotes: '',
+        //x_coord: null,
+        //y_coord: null,
+        locationDetails: '',
         callerName: '',
-        callerNum: ''
+        callerPhoneNumber: ''
       }}
       onSubmit={submitFunc}
       validationSchema={Yup.object().shape({
@@ -122,12 +141,12 @@ console.log((new Date()).toISOString())
         .required('Required'),
         priority: Yup.string()
         .required('Required'),
-        timeReceived: Yup.string()
-        .required('Required'),
+        // timeReceived: Yup.string()
+        // .required('Required'),
         address: Yup.string(),
-        locationNotes: Yup.string(),
+        locationDetails: Yup.string(),
         callerName: Yup.string(),
-        callerNum: Yup.string()
+        callerPhoneNumber: Yup.string()
       })}
     >
       {props => {
@@ -259,7 +278,7 @@ console.log((new Date()).toISOString())
               </TextField>
               </Box>
 
-              <Box>
+              {/* <Box>
               <TextField
                 id="timeReceived"
                 label="Time"
@@ -284,7 +303,7 @@ console.log((new Date()).toISOString())
               >
                 Now
               </Button>
-              </Box>
+              </Box> */}
 
               <Box>
               <TextField
@@ -301,11 +320,11 @@ console.log((new Date()).toISOString())
               />
 
               <MuiPhoneNumber 
-                id="callerNum"
+                id="callerPhoneNumber"
                 defaultCountry={'us'} 
-                value={values.callerNum}
+                value={values.callerPhoneNumber}
                 onChange={value=>{
-                  setFieldValue('callerNum', value.replace(/\D/g,''))
+                  setFieldValue('callerPhoneNumber', value.replace(/\D/g,''))
                 }}
                 onBlur={handleBlur}
                 label="Caller's Phone Number"
@@ -329,13 +348,13 @@ console.log((new Date()).toISOString())
               </Box>
               <Box>
               <TextField
-                id="locationNotes"
+                id="locationDetails"
                 placeholder="Special hazards, landmarks, etc."
                 type="text"
-                value={values.locationNotes}
+                value={values.locationDetails}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={errors.locationNotes && touched.locationNotes}
+                error={errors.locationDetails && touched.locationDetails}
                 label="Location Notes"
                 multiline
                 rows="2"
@@ -373,7 +392,7 @@ console.log((new Date()).toISOString())
                 <MapWidget address={values.address} />
               </Box>
             </Box>
-                  
+          <DisplayFormikState {...props} />  
           </form>
         );
       }}
@@ -382,6 +401,6 @@ console.log((new Date()).toISOString())
   </div>
 )};
 
-//            <DisplayFormikState {...props} />
+//            
 
 export default CallForm;
