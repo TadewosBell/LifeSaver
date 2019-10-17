@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import MissionEditable from './MissionEditable';
 import CallPreview from '../Call/CallPreview';
 import { makeStyles, Button, List, ListItem, ListItemText, ListSubheader, Grid, Typography } from '@material-ui/core';
+import { getMissions } from '../Client/LifeSaverClient';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
     column: {
         maxHeight: '100vh',
         maxWidth: '100vw'
@@ -15,7 +16,7 @@ const useStyles = makeStyles(() => ({
     callPreview: {
         width: '100%'
     }
-}));
+});
 
 
 export default function MissionView(props) {
@@ -26,12 +27,16 @@ export default function MissionView(props) {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     useEffect(() => {
+        async function loadData() {
+            const missionsPromise = getMissions();
+            setMissions(await missionsPromise);
+        }
         const calls = [
             {id: -1, name: 'Flooding', priority:'High'}, 
             {id: -2, name: 'Power Outage', priority:'Medium'}, 
             {id: -3, name: 'Bridge Collapse', priority:'High'}
         ];
-        setMissions([...Array(100).keys()].map(x => ({ id: x, name: `Mission ${x}`, active: x % 2 === 0, calls: [...calls] })));
+        loadData();
         setUnassignedCalls([...Array(100).keys()].map(x => ({ id: x, name: `Power line down ${x}`, priority: `HIGH` })));
     }, []);
 
@@ -51,7 +56,7 @@ export default function MissionView(props) {
                 <List className={classes.list} subheader={<ListSubheader>Missions</ListSubheader>}>
                     {missions.map((x, i) =>
                     <ListItem button selected={selectedIndex === i} onClick={() => setSelectedIndex(i)}>
-                        <ListItemText primary={x.name} secondary={x.active ? "ACTIVE" : "INACTIVE"} />
+                        <ListItemText primary={x.title} secondary={x.active ? "ACTIVE" : "INACTIVE"} />
                     </ListItem>)}
                 </List>
             </Grid>

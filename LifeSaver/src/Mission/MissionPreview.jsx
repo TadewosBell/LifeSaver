@@ -5,7 +5,7 @@ export default function MissionPreview(props) {
     const { data } = props;
     return (
         <Card>
-            <CardHeader title={data.name} subheader={data.active ? "Active" : "Inactive"}/>
+            <CardHeader title={data.title} subheader={data.active ? "Active" : "Inactive"}/>
         </Card>
     );
 }

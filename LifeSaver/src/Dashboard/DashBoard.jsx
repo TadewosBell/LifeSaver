@@ -23,7 +23,7 @@ class DashBoard extends Component {
 
         }
 
-        getUserName('TadewosBell',onSuccess, onFailure);
+        //getUserName('TadewosBell',onSuccess, onFailure);
     }
 
     render() { 

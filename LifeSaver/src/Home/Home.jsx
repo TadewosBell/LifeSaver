@@ -1,10 +1,10 @@
-import React, { Component } from '../../node_modules/react';
+import React, { Component } from 'react';
 import {
   Route,
   HashRouter,
-} from '../../node_modules/react-router-dom';
+} from 'react-router-dom';
 import LandingPage from './LandingPage';
-import { withRouter } from '../../node_modules/react-router';
+import { withRouter } from 'react-router';
 import DashBoard from '../Dashboard/DashBoard';
 import CssBaseline from '@material-ui/core/CssBaseline';
 

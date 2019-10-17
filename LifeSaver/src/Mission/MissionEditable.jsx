@@ -23,7 +23,7 @@ export default function MissionEditable(props) {
 
     return (
         <Card>
-            <CardHeader title={data.name}/>
+            <CardHeader title={data.title}/>
             <CardContent>
                 <Grid container spacing={3}>{data.calls && [...data.calls].map(toCallItem)}</Grid>
             </CardContent>
