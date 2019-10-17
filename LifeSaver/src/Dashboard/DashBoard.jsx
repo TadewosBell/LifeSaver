@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getJson, getUserName } from '../Client/LifeSaverClient';
-import MissionView from '../Mission/MissionView'
+import CallEvent from '../FirstResponder/CallEvent';
 
 class DashBoard extends Component {
     constructor(props) {
@@ -30,7 +30,8 @@ class DashBoard extends Component {
         const { userName } = this.state;
         return ( 
             <div>
-                <MissionView/>
+                <h1>Current Call</h1>
+                <CallEvent />
             </div>
          );
     }
