@@ -91,8 +91,6 @@ function getDateString(dateString){
 }
 
 const submitFunc = async (values, { setSubmitting }) => {
-  alert("sent")
-
   let copy = Object.assign({}, values)
   let address = copy.address;
   let details = copy.locationDetails;
@@ -103,13 +101,13 @@ const submitFunc = async (values, { setSubmitting }) => {
   copy.location = {address, coordinates, details};
   let toSubmit = JSON.stringify(copy, null, 2)
   let waitingOn= await postCall(toSubmit)
-    if(waitingOn){
-        alert(toSubmit);
-      }
-      else{
-        alert("Error submitting form");
-      }
-      setSubmitting(false);
+    try{
+      alert(toSubmit);
+    }
+    catch(e){
+      alert(e)
+    }
+    setSubmitting(false);
 }
 
 console.log((new Date()).toISOString())

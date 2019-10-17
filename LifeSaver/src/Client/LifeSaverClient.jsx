@@ -42,20 +42,20 @@ export async function deleteCall(id) {
     await request('DELETE', `Calls/${id}`);
 }
 
-export function getMissions() {
+export async function getMissions() {
     const response = await request('GET', 'Missions');
     return await response.json();
 }
 
-export function getMission(id) {
+export async function getMission(id) {
     const response = await request('GET', `Missions/${id}`);
     return await response.json();
 }
 
-export function postMission(mission) {
+export async function postMission(mission) {
     await request('POST', 'Missions', mission);
 }
 
-export function deleteMission(id) {
+export async function deleteMission(id) {
     await request('DELETE', `Missions/${id}`);
 }
