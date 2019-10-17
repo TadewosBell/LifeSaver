@@ -4,7 +4,11 @@
   "description": "tool to be used for emergency situation to help save lives.",
   "main": "index.js",
   "dependencies": {
-    "create-react-app": "^3.1.2"
+    "classnames": "^2.2.6",
+    "create-react-app": "^3.1.2",
+    "formik": "^1.5.8",
+    "material-ui-phone-number": "^2.2.1",
+    "yup": "^0.27.0"
   },
   "devDependencies": {},
   "scripts": {
