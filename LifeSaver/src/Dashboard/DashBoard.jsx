@@ -1,4 +1,4 @@
-import React, { Component } from '../../node_modules/react';
+import React, { Component } from 'react';
 import { getJson, getUserName } from '../Client/LifeSaverClient';
 import CallEvent from '../FirstResponder/CallEvent';
 
@@ -23,7 +23,7 @@ class DashBoard extends Component {
 
         }
 
-        getUserName('TadewosBell',onSuccess, onFailure);
+        //getUserName('TadewosBell',onSuccess, onFailure);
     }
 
     render() { 
