@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HomePage from './Home/Home';
+import HomePage from './CallDesk/CallForm';
 
 ReactDOM.render(
   <HomePage />,
