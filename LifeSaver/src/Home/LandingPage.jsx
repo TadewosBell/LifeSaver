@@ -10,7 +10,7 @@ class LandingPage extends Component {
     }
 
     redirect = () => {
-        this.props.history.push('/Dashboard/');
+        this.props.history.push('/Login');
     }
 
     clicked = () => {
@@ -32,7 +32,7 @@ class LandingPage extends Component {
         return ( 
             <div>
             <h1>Hello! {clicked.toString()}</h1>
-            <button onClick={this.clicked} > Click</button>
+            <button onClick={this.clicked} >START</button>
             </div>
          );
     }

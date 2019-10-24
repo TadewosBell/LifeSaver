@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as LifeSaverClient from '../Client/LifeSaverClient';
+import { Redirect } from 'react-router/cjs/react-router.min';
 
 
 function Copyright() {
@@ -20,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        UMBC Life Saver
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -65,12 +66,14 @@ export default function SignUp() {
         console.log(firstName);
         const onSuccess = (res) => {
             console.log(res);
+            return <Redirect to='#/Login'></Redirect>;
         }
         const onFailure = (res) => {
-
+            console.log(res);
         }
 
         LifeSaverClient.signUp(firstName, lastName, email, password,onSuccess, onFailure);
+        return <Redirect to='/Login'></Redirect>
   }
 
   return (
@@ -140,6 +143,10 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
           <Button
             type="submit"
             fullWidth
@@ -152,7 +159,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#/Login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

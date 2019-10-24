@@ -52,6 +52,15 @@ export function signUp(firstName, lastName, email, password, onSuccess, onFailur
     performHTTPRequest('POST', 'SignUp', postData, onSuccess, onFailure);
 }
 
+export function signIn(email, password, onSuccess, onFailure){
+    const getData = {
+        email,
+        password
+    }
+
+    performHTTPRequest('POST', 'SignIn', getData, onSuccess, onFailure);
+}
+
 
 export function getUserName(userName, onSuccess, onFailure) {
 
