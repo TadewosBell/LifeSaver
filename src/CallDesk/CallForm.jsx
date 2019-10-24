@@ -3,7 +3,9 @@
 
 import React from 'react';
 import { Formik/*, yupToFormErrors*/ } from 'formik';
-import LinearProgress from '@material-ui/core/LinearProgress';
+//import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import * as Yup from 'yup';
 
 
@@ -11,11 +13,14 @@ import * as Yup from 'yup';
 /*import clsx from 'clsx';*/
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiPhoneNumber from 'material-ui-phone-number'
 import Container from '@material-ui/core/Container';
+
 import Box from '@material-ui/core/Box';
+
 
 import MapWidget from "../common/Location";
 import { /*submitCall,*/ postCall } from "../Client/LifeSaverClient";
@@ -41,6 +46,9 @@ const useStyles = makeStyles(theme => ({
     fontSize:50
   },
   button: {
+    margin: theme.spacing(1),
+  },
+  progress: {
     margin: theme.spacing(1),
   },
   map:{
@@ -169,11 +177,6 @@ console.log((new Date()).toISOString())
 
 
           <form /*className={classes.container}*/ onSubmit={handleSubmit}>
-            {isSubmitting ? (
-              <LinearProgress/>
-            ) : (
-              <LinearProgress variant="determinate" value={0}/>
-            )}
             
             <Box display="flex" flexDirection="row">
             <Box>
@@ -368,7 +371,7 @@ console.log((new Date()).toISOString())
               />
               </Box>        
               
-              <Box display="flex" justifyContent="center">
+              <Grid container alignItems="center">
               <Button 
                 className={classes.button}
                 type="button"
@@ -378,7 +381,7 @@ console.log((new Date()).toISOString())
               >
                 Reset
               </Button>
-
+              
               <Button 
                 className={classes.button}
                 type="submit"
@@ -388,7 +391,12 @@ console.log((new Date()).toISOString())
               >
                 Submit
               </Button>
-              </Box>
+              {isSubmitting ? (
+                <CircularProgress className = {classes.progress} size={24} />
+                ) : (
+                <div/>
+              )}
+              </Grid>
               </Box>
 
               <Box margin="normal" bgcolor="white.300" className={classes.map}>
