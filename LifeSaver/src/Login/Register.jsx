@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as LifeSaverClient from '../Client/LifeSaverClient';
 import { Redirect } from 'react-router/cjs/react-router.min';
+import { useHistory } from "react-router-dom";
 
 
 function Copyright() {
@@ -59,21 +60,27 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory();
 
   function signUp(event){
       event.preventDefault();
         console.log(firstName);
         const onSuccess = (res) => {
             console.log(res);
-            return <Redirect to='#/Login'></Redirect>;
+            if(res.error){
+              setMessage(res.error);
+            }
+            else if(res.registered){
+              history.push('/Login');
+            }
         }
         const onFailure = (res) => {
             console.log(res);
         }
 
         LifeSaverClient.signUp(firstName, lastName, email, password,onSuccess, onFailure);
-        return <Redirect to='/Login'></Redirect>
   }
 
   return (
@@ -86,6 +93,10 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        { message &&     
+                <Typography component="h2" variant="h5">
+                {message}
+                </Typography>}
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
