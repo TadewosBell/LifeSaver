@@ -1,14 +1,14 @@
 // Helper styles for demo
-import { MoreResources, DisplayFormikState } from './helper';
+// import { MoreResources, DisplayFormikState } from './helper';
 
 import React from 'react';
-import { Formik, yupToFormErrors } from 'formik';
+import { Formik/*, yupToFormErrors*/ } from 'formik';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import * as Yup from 'yup';
 
 
 
-import clsx from 'clsx';
+/*import clsx from 'clsx';*/
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -18,7 +18,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 
 import MapWidget from "../common/Location";
-import { submitCall, postCall } from "../Client/LifeSaverClient";
+import { /*submitCall,*/ postCall } from "../Client/LifeSaverClient";
 
 
 const useStyles = makeStyles(theme => ({
@@ -64,13 +64,16 @@ const categories = [
 const CallForm = () => {
 const classes = useStyles();
 
+/*
 function pad(number) {
   if (number < 10) {
     return '0' + number;
   }
   return number;
 }
+*/
 
+/*
 function now(){
   return (new Date()).toISOString()
   // let time = (new Date())
@@ -81,6 +84,7 @@ function now(){
   // + pad(time.getMinutes());
 }
 
+
 function getDateString(dateString){
   let time = (new Date())
   return time.getFullYear() + "-" 
@@ -89,6 +93,7 @@ function getDateString(dateString){
   + pad(time.getHours()) + ":" 
   + pad(time.getMinutes());
 }
+*/
 
 const submitFunc = async (values, { setSubmitting }) => {
   let copy = Object.assign({}, values)
@@ -100,14 +105,14 @@ const submitFunc = async (values, { setSubmitting }) => {
   //delete copy.coordinates;
   copy.location = {address, coordinates, details};
   let toSubmit = JSON.stringify(copy, null, 2)
-  let waitingOn= await postCall(toSubmit)
-    try{
-      alert(toSubmit);
-    }
-    catch(e){
-      alert(e)
-    }
-    setSubmitting(false);
+  await postCall(toSubmit);
+  try{
+    alert(toSubmit);
+  }
+  catch(e){
+    alert(e)
+  }
+  setSubmitting(false);
 }
 
 console.log((new Date()).toISOString())
@@ -364,7 +369,7 @@ console.log((new Date()).toISOString())
               </Box>        
               
               <Box display="flex" justifyContent="center">
-              <Button variant="outlined" 
+              <Button 
                 className={classes.button}
                 type="button"
                 onClick={handleReset}
@@ -374,7 +379,7 @@ console.log((new Date()).toISOString())
                 Reset
               </Button>
 
-              <Button variant="outlined" 
+              <Button 
                 className={classes.button}
                 type="submit"
                 disabled={isSubmitting}
@@ -390,7 +395,7 @@ console.log((new Date()).toISOString())
                 <MapWidget address={values.address} />
               </Box>
             </Box>
-          <DisplayFormikState {...props} />  
+          {/* <DisplayFormikState {...props} />   */}
           </form>
         );
       }}
