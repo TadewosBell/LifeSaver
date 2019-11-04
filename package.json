@@ -4,13 +4,16 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.5.2",
+    "@material-ui/icons": "^4.5.1",
     "classnames": "^2.2.6",
     "formik": "^1.5.8",
     "material-ui-phone-number": "^2.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
+    "redux": "^4.0.4",
     "redux-observable": "^1.2.0",
     "yup": "^0.27.0"
   },
