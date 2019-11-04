@@ -1,41 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import { withRouter } from 'react-router';
+import { showSnackbar } from '../redux/modules/snackbar'
+import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
 
-class LandingPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            clicked: false,
-         }
+const LandingPage = (props) => {
+    const dispatch = useDispatch();
+    const [clicked, setClicked] = useState(false);
+
+    const onClick = () => {
+        setClicked(!clicked);     
     }
 
-    redirect = () => {
-        this.props.history.push('/Dashboard/');
-    }
-
-    clicked = () => {
-        let { clicked } = this.state;
-
-        clicked = !clicked;
-        this.setState({
-            clicked,
-        }, () => {
-            this.redirect();
-        });
-        
-    }
-
-    
-
-    render() { 
-        let { clicked } = this.state;
-        return ( 
-            <div>
+    return ( 
+        <div>
             <h1>Hello! {clicked.toString()}</h1>
-            <button onClick={this.clicked} > Click</button>
-            </div>
-         );
-    }
+            <button onClick={onClick}>Click</button>
+            <button onClick={() => dispatch(showSnackbar(SUCCESS_SNACKBAR, "Successfully displayed this message."))}>test</button>
+            <SuccessSnackbar />
+        </div>
+    );
 }
  
 export default withRouter(LandingPage);
