@@ -1,5 +1,7 @@
 import React from 'react';
 import CallForm from './CallForm';
+import CallEdit from './CallEdit';
+
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -68,7 +70,7 @@ function CallDeskPage() {
                 <CallForm />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CallForm />
+                <CallEdit />
             </TabPanel>
             {/* <TabPanel value={value} index={2}>
             <CallForm/>
