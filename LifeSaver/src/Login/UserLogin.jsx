@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router/cjs/react-router.min';
 import * as LifeSaverClient from '../Client/LifeSaverClient';
+import { useHistory } from "react-router-dom";
+import CustomizedSnackbars from "../CustomSnackBar";
 
 function Copyright() {
   return (
@@ -57,20 +59,44 @@ export default function SignIn() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  let history = useHistory();
+  const [message, setMessage] = useState("");
+  const [messageVariant, setMessageVariant] = useState("");
+  const [messageOpen, setMessageOpen] = useState(false);
+  const handleClose = (event, reason) => {
+    console.log("help me");
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setMessageOpen(false);
+  };
+
+
 
   function signIn(event){
     event.preventDefault();
-      console.log(email);
       const onSuccess = (res) => {
           console.log(res);
-          return <Redirect to='#/Login'></Redirect>;
+          if(res.error){
+            setMessage(res.error);
+            setMessageVariant('error');
+            setMessageOpen(true);
+          }
+          else if(res.registered){
+            console.log(res.access_token);
+            sessionStorage.setItem('jwt_token', res.access_token);
+            setMessage(res.error);
+            setMessageVariant("success");
+            setMessageOpen(true);
+            //history.push('/Login');
+          }
       }
       const onFailure = (res) => {
           console.log(res);
       }
 
       LifeSaverClient.signIn(email, password, onSuccess, onFailure);
-      return <Redirect to='/Login'></Redirect>
 }
 
   return (
@@ -130,6 +156,13 @@ export default function SignIn() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      { messageOpen &&     
+              <CustomizedSnackbars 
+                variant={messageVariant}
+                open={messageOpen}
+                message={message}
+                onClose={handleClose}
+              />}
     </Container>
   );
 }
