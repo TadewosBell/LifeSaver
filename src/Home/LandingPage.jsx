@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { withRouter } from 'react-router';
-import { showSnackbar } from '../redux/modules/snackbar'
+import { showSnackbar } from '../redux/modules/snackbar';
 import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
+import UserLogin from '../Login/UserLogin';
 
 const LandingPage = (props) => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const LandingPage = (props) => {
             <h1>Hello! {clicked.toString()}</h1>
             <button onClick={onClick}>Click</button>
             <button onClick={() => dispatch(showSnackbar(SUCCESS_SNACKBAR, "Successfully displayed this message."))}>test</button>
+            <UserLogin/>
             <SuccessSnackbar />
         </div>
     );
