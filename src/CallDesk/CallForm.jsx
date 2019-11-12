@@ -56,11 +56,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// const priorities = [
+//   '',
+//   'Minor',
+//   'Important',
+//   'Drastic'
+// ]
+
 const priorities = [
   '',
-  'Minor',
-  'Important',
-  'Drastic'
+  'Wolf',
+  'Tiger',
+  'Demon',
+  'Dragon',
+  'God'
 ]
 
 const categories = [
@@ -72,9 +81,10 @@ const categories = [
   'Earthquake'
 ]
 
-const CallForm = () => {
-  const classes = useStyles();
 
+const CallForm = (props) => {
+  const classes = useStyles();
+  const updateDatabase = props.onUpdate;
   /*
   function pad(number) {
     if (number < 10) {
@@ -124,6 +134,7 @@ const CallForm = () => {
       alert(e)
     }
     setSubmitting(false);
+    updateDatabase();
   }
 
   console.log((new Date()).toISOString())
