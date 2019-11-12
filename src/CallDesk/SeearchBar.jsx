@@ -10,6 +10,8 @@ import Popper from '@material-ui/core/Popper';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 import { getCalls } from "../Client/LifeSaverClient";
 
 function renderInputComponent(inputProps) {
@@ -100,7 +102,7 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1),
-      },
+    },
 }));
 
 export default function IntegrationAutosuggest(props) {
@@ -145,7 +147,7 @@ export default function IntegrationAutosuggest(props) {
     //STUPID LOGIC
     //Forces a flush on every single database update
     const [counter, setCounter] = React.useState(0);
-    if (props.counter != counter){
+    if (props.counter != counter) {
         setCounter(props.counter)
         setState({
             ...state,
@@ -195,43 +197,56 @@ export default function IntegrationAutosuggest(props) {
     };
 
     return (
-        <form className={classes.root} action="#" onSubmit={()=> {props.onSearch(state.popper)}}>
-            <div className={classes.divider} />
-            <Autosuggest
-                {...autosuggestProps}
-                inputProps={{
-                    classes,
-                    id: 'react-autosuggest-popper',
-                    label: 'Search',
-                    placeholder: 'Enter Title...',
-                    value: state.popper,
-                    onChange: handleChange('popper'),
-                    inputRef: node => {
-                        setAnchorEl(node);
-                    },
-                    InputLabelProps: {
-                        shrink: true,
-                    },
-                }}
-                theme={{
-                    suggestionsList: classes.suggestionsList,
-                    suggestion: classes.suggestion,
-                }}
-                renderSuggestionsContainer={options => (
-                    <Popper anchorEl={anchorEl} open={Boolean(options.children)}>
-                        <Paper
-                            square
-                            {...options.containerProps}
-                            style={{ width: anchorEl ? anchorEl.clientWidth : undefined }}
-                        >
-                            {options.children}
-                        </Paper>
-                    </Popper>
-                )}
-            />
-            <Button variant="contained" color="primary" className={classes.button} type="submit">
-                SEARCH
-            </Button>
+        <form className={classes.root} action="#" onSubmit={() => { props.onSearch(state.popper) }}>
+            <Grid
+                justify="space-between"
+                container
+                spacing={24}
+            >
+                <Grid   item  xs={11}>
+
+
+                    <Autosuggest
+                        {...autosuggestProps}
+                        inputProps={{
+                            classes,
+                            id: 'react-autosuggest-popper',
+                            label: 'Search',
+                            placeholder: 'Enter Title...',
+                            value: state.popper,
+                            onChange: handleChange('popper'),
+                            inputRef: node => {
+                                setAnchorEl(node);
+                            },
+                            InputLabelProps: {
+                                shrink: true,
+                            },
+                        }}
+                        theme={{
+                            suggestionsList: classes.suggestionsList,
+                            suggestion: classes.suggestion,
+                        }}
+                        renderSuggestionsContainer={options => (
+                            <Popper anchorEl={anchorEl} open={Boolean(options.children)}>
+                                <Paper
+                                    square
+                                    {...options.containerProps}
+                                    style={{ width: anchorEl ? anchorEl.clientWidth : undefined }}
+                                >
+                                    {options.children}
+                                </Paper>
+                            </Popper>
+                        )}
+                    />
+                </Grid>
+
+                <Grid item xs>
+                    <Button variant="contained" color="primary" className={classes.button} type="submit">
+                        SEARCH
+                    </Button>
+                </Grid>
+            </Grid>
+
         </form>
     );
 }
