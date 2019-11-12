@@ -24,11 +24,12 @@ async function request(method, path, jsonData) {
     return await fetch(url, requestInfo);
 }
 
-export async function signUp(firstName, lastName, email, password){
+export async function signUp(firstName, lastName, email,role, password){
     const postData = {
         firstName,
         lastName,
         email,
+        role,
         password
     }
     const response = await request('POST', 'SignUp', postData);
