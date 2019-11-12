@@ -12,6 +12,14 @@ import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+import red from '@material-ui/core/colors/red';
+import orange from '@material-ui/core/colors/orange';
+import yellow from '@material-ui/core/colors/yellow';
+import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -37,7 +45,8 @@ function SearchResult(props) {
     const call = props.call;
 
     return (
-        <Card className={classes.card}>
+        //<MuiThemeProvider theme={red}>
+        <Card className={classes.card} color="red">
             <CardActionArea onClick={() => props.editCall(call)}>
                 <CardContent>
                     <Typography variant="h5" component="h3">
@@ -52,6 +61,7 @@ function SearchResult(props) {
                 </CardContent>
             </CardActionArea>
         </Card>
+        //</MuiThemeProvider>
     );
 }
 
