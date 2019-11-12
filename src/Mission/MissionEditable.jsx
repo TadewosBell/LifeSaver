@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux'
 import { Card, CardHeader, Grid, CardContent, Button } from '@material-ui/core';
 import CallPreview from '../Call/CallPreview'
-import { useDispatch } from 'react-redux'
-import { removeCallFromMission, getCallsForMission  } from '../redux/modules/server';
+import { removeCallFromMission  } from '../redux/modules/server';
 
 export default function MissionEditable({ data }) {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getCallsForMission(data._id.$oid));
-    });
 
     function removeButton(callId) {
         return <Button size="small" variant="contained" color="secondary" onClick={() => dispatch(removeCallFromMission(data._id.$oid, callId))}>REMOVE</Button>;

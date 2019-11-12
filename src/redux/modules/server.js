@@ -49,9 +49,9 @@ export const getUnassignedCallsEpic = action$ => action$.pipe(
 
 export const getCallsForMissionEpic = action$ => action$.pipe(
   ofType(GET_CALLS_FOR_MISSION),
-  mergeMap(() =>
-      from(getCallsForMissionPromise()).pipe(
-          map(updateCurrentMission)
+  mergeMap(action =>
+      from(getCallsForMissionPromise(action.mission)).pipe(
+          map(calls => updateCurrentMission(action.mission, calls))
       )
   )
 );
@@ -89,8 +89,8 @@ const server = (state = {}, action) => {
       };
     case UPDATE_CURRENT_MISSION:
         return {
-          ...state,
-          missions: state.missions.map(x => x._id.$oid === action.mission._id.$oid ? {...x, calls: action.calls} : {...x})
+            ...state,
+            missions: state.missions.map(x => x._id.$oid === action.mission ? {...x, calls: action.calls} : {...x})
         };
     default:
       return state;

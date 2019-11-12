@@ -1,6 +1,8 @@
-import React, {useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MissionEditable from '../Mission/MissionEditable';
 import CallPreview from '../Call/CallPreview';
+import { useDispatch } from 'react-redux'
+import { getCallsForMission  } from '../redux/modules/server';
 import { makeStyles, Button, List, ListItem, ListItemText, ListSubheader, Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -20,8 +22,14 @@ const useStyles = makeStyles({
 
 export default function MissionViewTemplate({ missions, unassignedCalls, addCall }) {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [selectedIndex, setSelectedIndex] = useState(0);
+
+    useEffect(() => {
+        if (missions && missions.length > 0 && missions[selectedIndex] && missions[selectedIndex]._id && missions[selectedIndex]._id.$oid)
+            dispatch(getCallsForMission(missions[selectedIndex]._id.$oid));
+    });
 
     function addButton(callId) {
         return <Button size="small" variant="contained" color="primary" onClick={() => addCall(missions[selectedIndex]._id.$oid, callId)}>ADD</Button>;

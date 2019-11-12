@@ -26,7 +26,7 @@ const MissionView = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const updater = interval(10000).pipe(
+        const updater = interval(100000).pipe(
             startWith(0)
         ).subscribe(() => {
             dispatch(getMissions());
