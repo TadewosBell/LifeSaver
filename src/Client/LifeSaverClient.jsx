@@ -59,6 +59,10 @@ export async function postCall(call) {
     await request('POST', 'Calls', call);
 }
 
+export async function updateCall(id, call) {
+    await request('PUT', `Calls/${id}`, call);
+}
+
 export async function deleteCall(id) {
     await request('DELETE', `Calls/${id}`);
 }
@@ -79,4 +83,17 @@ export async function postMission(mission) {
 
 export async function deleteMission(id) {
     await request('DELETE', `Missions/${id}`);
+}
+
+export async function getCallsForMission(id) {
+    const response = await request('GET', `Missions/Calls/${id}`);
+    return await response.json();
+}
+
+export async function addCallToMission(missionId, callId) {
+    await request('POST', `Missions/Calls?mission=${missionId}&call=${callId}`);
+}
+
+export async function removeCallFromMission(missionId, callId) {
+    await request('DELETE', `Missions/Calls?mission=${missionId}&call=${callId}`);
 }
