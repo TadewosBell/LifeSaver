@@ -110,32 +110,6 @@ export default function IntegrationAutosuggest(props) {
     const [options, setOptions] = React.useState([]);
     const loading = /*open &&*/ options.length === 0;
 
-    React.useEffect(() => {
-        let active = true;
-
-        if (!loading) {
-            return undefined;
-        }
-
-        (async () => {
-            const response = await getCalls();
-            //await sleep(1e3); // For demo purposes.
-
-            const labels = response.map(obj => obj.title);
-            const labelSet = [...new Set(labels)];
-            const toDisplay = labelSet.map(label => { return { label: label }; })
-            console.log(toDisplay);
-
-            //To negate multiple sessions if they exist due to multiple re-renders
-            if (active) {
-                setOptions(toDisplay);
-            }
-        })();
-
-        return () => {
-            active = false;
-        };
-    }, [true]);
 
     // React.useEffect(() => {
     //     if (!open) {
@@ -167,6 +141,49 @@ export default function IntegrationAutosuggest(props) {
             [name]: newValue,
         });
     };
+
+    //STUPID LOGIC
+    //Forces a flush on every single database update
+    const [counter, setCounter] = React.useState(0);
+    if (props.counter != counter){
+        setCounter(props.counter)
+        setState({
+            ...state,
+            "popper": ""
+        });
+        setSuggestions([]);
+    }
+
+    console.log(counter);
+    //ASYNC STUFF
+    React.useEffect(() => {
+        let active = true;
+
+        // if (!loading) {
+        //     return undefined;
+        // }
+
+        (async () => {
+            const response = await getCalls();
+            //await sleep(1e3); // For demo purposes.
+
+            const labels = response.map(obj => obj.title);
+            const labelSet = [...new Set(labels)];
+            const toDisplay = labelSet.map(label => { return { label: label }; })
+            console.log(toDisplay);
+
+            //To negate multiple sessions if they exist due to multiple re-renders
+            if (active) {
+                setOptions(toDisplay);
+                console.log("UPDATED OPTIONS")
+
+            }
+        })();
+
+        return () => {
+            active = false;
+        };
+    }, [counter]);
 
     const autosuggestProps = {
         renderInputComponent,
@@ -212,7 +229,7 @@ export default function IntegrationAutosuggest(props) {
                     </Popper>
                 )}
             />
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" color="primary" className={classes.button} type="submit">
                 SEARCH
             </Button>
         </form>

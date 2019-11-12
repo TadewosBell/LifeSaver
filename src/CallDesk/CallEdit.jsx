@@ -4,11 +4,16 @@ import SearchResults from './SearchResults';
 
 const CallEdit = (props) => {
     const [query, setQuery] = React.useState("");
+    const [counter, setCounter] = React.useState(0);
+    if (props.counter != counter){
+        setCounter(props.counter)
+        setQuery("");
+    }
 
     return (
         <div>
-            <SearchBar onSearch={(input)=>{setQuery(input)}} />
-            <SearchResults query={query} editCall={props.editCall}/>
+            <SearchBar onSearch={(input)=>{setQuery(input)}} counter={counter}/>
+            <SearchResults query={query} editCall={props.editCall} counter={counter}/>
         </div>
     );
 }

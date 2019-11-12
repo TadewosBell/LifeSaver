@@ -1,7 +1,7 @@
 import React from 'react';
 import CallForm from './CallForm';
 import CallEdit from './CallEdit';
-
+import CallEditForm from './CallEditForm';
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,6 +52,17 @@ const useStyles = makeStyles(theme => ({
 function CallDeskPage() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [editing, setEditing] = React.useState(null);
+    const [counter, setCounter] = React.useState(0);
+
+    const editCall = (call) => {
+        setEditing(call);
+        setValue(2);
+    }
+
+    const updateDatabase = () => {
+        setCounter(counter+1);
+    }
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -63,18 +74,21 @@ function CallDeskPage() {
                 <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
                     <Tab label="Enter Call" {...a11yProps(0)} />
                     <Tab label="Edit Call" {...a11yProps(1)} />
+                    {editing != null ? <Tab label={`Edit Call (${editing.title})`} {...a11yProps(2)} /> : []}
                     {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <CallForm />
+                <CallForm onUpdate={updateDatabase}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CallEdit editCall={(call)=>console.log("EDITING" + call)}/>
+                <CallEdit editCall={editCall} counter={counter}/>
             </TabPanel>
-            {/* <TabPanel value={value} index={2}>
-            <CallForm/>
-        </TabPanel> */}
+            {editing != null ?
+                <TabPanel value={value} index={2}>
+                    <CallEditForm call={editing} onUpdate={updateDatabase}/>
+                </TabPanel>
+                : []}
         </div>
     );
 }

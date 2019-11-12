@@ -21,11 +21,11 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
     },
     gridList: {
-       // width: 500,
+        width: 1000,
         // height: 450,
     },
     card: {
-        //maxWidth: 345,
+        //maxWidth: 500,
     },
     media: {
         height: 140,
@@ -56,6 +56,8 @@ function SearchResult(props) {
 }
 
 export default function SearchResults(props) {
+    const counter = props.counter;
+
     const [calls, setCalls] = useState(
         []
     );
@@ -77,7 +79,7 @@ export default function SearchResults(props) {
         return () => {
           active = false;
         };
-      }, [true]); //"true" makes sure that we never refetch the component.
+      }, [counter]); //"true" makes sure that we never refetch the component.
 
       //We use a regex for matching, but this could cause problems with special characters.
       const toDisplay = props.query == "" ? [] : calls.filter((call) => call.title.toLowerCase().indexOf(props.query.toLowerCase()) != -1);
