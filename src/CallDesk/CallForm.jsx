@@ -81,6 +81,7 @@ const categories = [
   'Earthquake'
 ]
 
+
 const CallForm = (props) => {
   const classes = useStyles();
   const updateDatabase = props.onUpdate;
