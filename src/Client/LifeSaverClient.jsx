@@ -38,6 +38,10 @@ export async function postCall(call) {
     await request('POST', 'Calls', call);
 }
 
+export async function updateCall(id, call) {
+    await request('PUT', `Calls/${id}`, call);
+}
+
 export async function deleteCall(id) {
     await request('DELETE', `Calls/${id}`);
 }
