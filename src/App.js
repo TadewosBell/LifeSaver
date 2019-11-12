@@ -12,6 +12,8 @@ import './App.css';
 import LandingPage from './Home/LandingPage';
 import { Provider } from "react-redux";
 import store from "./redux/configureStore";
+import UserLogin from './Login/UserLogin';
+import Register from './Login/Register';
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
             <CssBaseline />
             <Router>
                 <Switch>
+                    <Route path="/Login/Register">
+                        <Register/>
+                    </Route>
+                    <Route path="/Login">
+                        <UserLogin/>
+                    </Route>
                     <Route path="/CallCenter">
                         <CallForm />
                     </Route>
@@ -30,7 +38,7 @@ function App() {
                         <CallEvent />
                     </Route>
                     <Route path="/">
-                        <LandingPage />
+                        <UserLogin/>
                     </Route>
                 </Switch>
             </Router>

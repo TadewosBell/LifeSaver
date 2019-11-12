@@ -29,10 +29,9 @@ export async function signUp(firstName, lastName, email, password){
         firstName,
         lastName,
         email,
-        password,
+        password
     }
-
-    const response = request('POST', 'SignUp', postData);
+    const response = await request('POST', 'SignUp', postData);
     return await response.json();
 }
 

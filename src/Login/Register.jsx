@@ -15,7 +15,11 @@ import Container from '@material-ui/core/Container';
 import * as LifeSaverClient from '../Client/LifeSaverClient';
 import { Redirect } from 'react-router/cjs/react-router.min';
 import { useHistory } from "react-router-dom";
-
+import {ErrorSnackbar, ERROR_SNACKBAR} from "../common/SnackbarTypes"
+//import CustomizedSnackbars from "../CustomSnackBar";
+import { useDispatch } from 'react-redux'
+import { showSnackbar } from '../redux/modules/snackbar';
+import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
 
 function Copyright() {
   return (
@@ -55,8 +59,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function Register() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -64,24 +69,27 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   let history = useHistory();
 
-  function signUp(event){
-      event.preventDefault();
-        console.log(firstName);
-        const onSuccess = (res) => {
-            console.log(res);
-            if(res.error){
-              setMessage(res.error);
-            }
-            else if(res.registered){
-              history.push('/Login');
-            }
-        }
-        const onFailure = (res) => {
-            console.log(res);
-        }
+  async function signUp(event){
+    event.preventDefault();
 
-        LifeSaverClient.signUp(firstName, lastName, email, password,onSuccess, onFailure);
-  }
+    try{
+      const res = await LifeSaverClient.signUp(firstName, lastName, email, password);
+
+      console.log(res);
+      if(res.error){
+        dispatch(showSnackbar(ERROR_SNACKBAR, res.error))
+      }
+      else if(res.registered){
+        dispatch(showSnackbar(SUCCESS_SNACKBAR, 'Signed up successfully!'));
+        console.log("yolo")
+        history.push('/Login');
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+    }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -154,10 +162,6 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -170,7 +174,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#/Login" variant="body2">
+              <Link href="Login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
@@ -180,6 +184,8 @@ export default function SignUp() {
       <Box mt={5}>
         <Copyright />
       </Box>
+      <SuccessSnackbar />
+      <ErrorSnackbar/>
     </Container>
   );
 }

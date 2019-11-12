@@ -69,12 +69,7 @@ export default function UserLogin() {
   const [messageVariant, setMessageVariant] = useState("");
   const [messageOpen, setMessageOpen] = useState(false);
   const handleClose = (event, reason) => {
-    console.log("help me");
-    if (reason === 'clickaway') {
-      return;
-    }
 
-    setMessageOpen(false);
   };
 
 
@@ -93,8 +88,9 @@ export default function UserLogin() {
         else if(res.registered){
           dispatch(showSnackbar(SUCCESS_SNACKBAR, 'Logged in successfully!'));
           console.log(res.access_token);
-
           sessionStorage.setItem('jwt_token', res.access_token);
+          sessionStorage.setItem("loggedIn", true)
+          
         }
       }
       catch(err){
@@ -149,7 +145,7 @@ export default function UserLogin() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#/Login/Register" variant="body2">
+              <Link href="/Login/Register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
