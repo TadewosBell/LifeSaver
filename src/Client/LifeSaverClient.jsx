@@ -24,6 +24,27 @@ async function request(method, path, jsonData) {
     return await fetch(url, requestInfo);
 }
 
+export async function signUp(firstName, lastName, email, password){
+    const postData = {
+        firstName,
+        lastName,
+        email,
+        password
+    }
+    const response = await request('POST', 'SignUp', postData);
+    return await response.json();
+}
+
+export async function signIn(email, password){
+    const getData = {
+        email,
+        password
+    }
+
+    const response = await request('POST', 'SignIn', getData);
+    return await response.json();
+}
+
 export async function getCalls() {
     const response = await request('GET', 'Calls')
     return await response.json();
