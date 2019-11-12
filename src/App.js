@@ -4,7 +4,7 @@ import {
     Switch,
     Route
   } from "react-router-dom";
-import { CssBaseline } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import CallForm from './CallDesk/CallForm';
 import MissionView from './Mission/MissionView';
 import CallEvent from './FirstResponder/CallEvent';
@@ -14,28 +14,28 @@ import { Provider } from "react-redux";
 import store from "./redux/configureStore";
 
 function App() {
-  return (
-    <Provider store={store()}>
-        <div className="App">
-            <CssBaseline />
-            <Router>
-                <Switch>
-                    <Route path="/CallCenter">
-                        <CallForm />
-                    </Route>
-                    <Route path="/OperationsChief">
-                        <MissionView />
-                    </Route>
-                    <Route path="/FirstResponder">
-                        <CallEvent />
-                    </Route>
-                    <Route path="/">
-                        <LandingPage />
-                    </Route>
-                </Switch>
-            </Router>
-        </div>
-    </Provider>
+    return (
+        <Provider store={store()}>
+            <div className="App">
+                <CssBaseline />
+                <Router>
+                    <Switch>
+                        <Route path="/CallCenter">
+                            <CallForm />
+                        </Route>
+                        <Route path="/OperationsChief">
+                            <MissionView />
+                        </Route>
+                        <Route path="/FirstResponder">
+                            <CallEvent />
+                        </Route>
+                        <Route path="/">
+                            <LandingPage />
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
+        </Provider>
   );
 }
 
