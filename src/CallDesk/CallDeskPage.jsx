@@ -70,7 +70,7 @@ function CallDeskPage() {
                 <CallForm />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <CallEdit />
+                <CallEdit editCall={(call)=>console.log("EDITING" + call)}/>
             </TabPanel>
             {/* <TabPanel value={value} index={2}>
             <CallForm/>

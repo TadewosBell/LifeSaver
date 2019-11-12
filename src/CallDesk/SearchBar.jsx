@@ -1,79 +1,79 @@
 // *https://www.registers.service.gov.uk/registers/country/use-the-api*
-import 'isomorphic-fetch';
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { getCalls } from "../Client/LifeSaverClient";
 
 function sleep(delay = 0) {
-    return new Promise(resolve => {
-        setTimeout(resolve, delay);
-    });
+  return new Promise(resolve => {
+    setTimeout(resolve, delay);
+  });
 }
 
 export default function Asynchronous() {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
+  const [open, setOpen] = React.useState(false);
+  const [options, setOptions] = React.useState([]);
+  const loading = open && options.length === 0;
 
-    React.useEffect(() => {
-        let active = true;
+  React.useEffect(() => {
+    let active = true;
 
-        if (!loading) {
-            return undefined;
-        }
+    if (!loading) {
+      return undefined;
+    }
 
-        (async () => {
-            const response = await fetch('https://country.register.gov.uk/records.json?page-size=5000');
-            await sleep(1e3); // For demo purposes.
-            const countries = await response.json();
+    (async () => {
+      const response = await getCalls();
+      await sleep(1e3); // For demo purposes.
 
-            if (active) {
-                setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-            }
-        })();
+      //To negate multiple sessions if they exist due to multiple re-renders
+      if (active) {
+        setOptions(response);
+      }
+    })();
 
-        return () => {
-            active = false;
-        };
-    }, [loading]);
+    return () => {
+      active = false;
+    };
+  }, [loading]);
 
-    React.useEffect(() => {
-        if (!open) {
-            setOptions([]);
-        }
-    }, [open]);
+  React.useEffect(() => {
+    if (!open) {
+      setOptions([]);
+    }
+  }, [open]);
 
-    return (
-        <Autocomplete
-            style={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
-            }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            getOptionLabel={option => option.name}
-            options={options}
-            loading={loading}
-            renderInput={params => (
-                <TextField
-                    {...params}
-                    label="Asynchronous"
-                    fullWidth
-                    variant="outlined"
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
+  return (
+    <Autocomplete
+      style={{ width: 300 }}
+      open={open}
+      onOpen={() => {
+        setOpen(true);
+      }}
+      onClose={() => {
+        setOpen(false);
+      }}
+      getOptionLabel={option => option.title}
+      options={options}
+      loading={loading}
+      renderInput={params => (
+        <TextField
+          {...params}
+          label="Asynchronous"
+          fullWidth
+          variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
+          }}
         />
-    );
+      )}
+    />
+  );
 }

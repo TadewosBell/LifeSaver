@@ -1,9 +1,15 @@
 import React from 'react';
-import SearchBar from './SearchBar';
+import SearchBar from './SeearchBar.jsx';
+import SearchResults from './SearchResults';
 
-const CallEdit = () => {
+const CallEdit = (props) => {
+    const [query, setQuery] = React.useState("");
+
     return (
-        <SearchBar/>
+        <div>
+            <SearchBar onSearch={(input)=>{setQuery(input)}} />
+            <SearchResults query={query} editCall={props.editCall}/>
+        </div>
     );
 }
 
