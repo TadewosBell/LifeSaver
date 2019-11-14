@@ -8,6 +8,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -67,13 +70,36 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = React.useState('');
+  const [open, setOpen] = React.useState(false);
   let history = useHistory();
+
+  const handleChange = event => {
+    setRole(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  function validate(){
+    var valid = true;
+    if(firstName == '' || lastName == '' || email == '' || role == '' || password == '' ){
+      valid =  false;
+    }
+    return valid;
+  }
 
   async function signUp(event){
     event.preventDefault();
-
+    const valid = validate();
+    if(!valid)return;
     try{
-      const res = await LifeSaverClient.signUp(firstName, lastName, email, password);
+      const res = await LifeSaverClient.signUp(firstName, lastName, email, role, password);
 
       console.log(res);
       if(res.error){
@@ -81,7 +107,6 @@ export default function Register() {
       }
       else if(res.registered){
         dispatch(showSnackbar(SUCCESS_SNACKBAR, 'Signed up successfully!'));
-        console.log("yolo")
         history.push('/Login');
       }
     }
@@ -146,6 +171,28 @@ export default function Register() {
                 onChange={e => setEmail(e.target.value)}
                 autoComplete="email"
               />
+            </Grid>
+            <Grid item xs={12}>
+            <InputLabel htmlFor="outlined-age-native-simple">
+              Choose Role
+            </InputLabel>
+              <Select
+                variant="outlined"
+                required
+                fullWidth
+                placeholder="Choose Role"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                value={role}
+                onChange={handleChange}
+              >
+                <MenuItem value={1}>First Responder</MenuItem>
+                <MenuItem value={2}>Volunteer</MenuItem>
+                <MenuItem value={3}>Mission Managment</MenuItem>
+                <MenuItem value={4}>Operation Cheif</MenuItem>
+                <MenuItem value={5}>Call Specialist</MenuItem>
+              </Select>
             </Grid>
             <Grid item xs={12}>
               <TextField
