@@ -24,6 +24,27 @@ async function request(method, path, jsonData) {
     return await fetch(url, requestInfo);
 }
 
+export async function signUp(firstName, lastName, email, password){
+    const postData = {
+        firstName,
+        lastName,
+        email,
+        password
+    }
+    const response = await request('POST', 'SignUp', postData);
+    return await response.json();
+}
+
+export async function signIn(email, password){
+    const getData = {
+        email,
+        password
+    }
+
+    const response = await request('POST', 'SignIn', getData);
+    return await response.json();
+}
+
 export async function getCalls() {
     const response = await request('GET', 'Calls')
     return await response.json();
@@ -35,7 +56,8 @@ export async function getCall(id) {
 }
 
 export async function postCall(call) {
-    await request('POST', 'Calls', call);
+    const response = await request('POST', 'Calls', call);
+    return await response.json();
 }
 
 export async function updateCall(id, call) {
@@ -62,4 +84,17 @@ export async function postMission(mission) {
 
 export async function deleteMission(id) {
     await request('DELETE', `Missions/${id}`);
+}
+
+export async function getCallsForMission(id) {
+    const response = await request('GET', `Missions/Calls/${id}`);
+    return await response.json();
+}
+
+export async function addCallToMission(missionId, callId) {
+    await request('POST', `Missions/Calls?mission=${missionId}&call=${callId}`);
+}
+
+export async function removeCallFromMission(missionId, callId) {
+    await request('DELETE', `Missions/Calls?mission=${missionId}&call=${callId}`);
 }
