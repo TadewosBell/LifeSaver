@@ -100,7 +100,7 @@ function SearchResult(props) {
                         {call.title}
                     </Typography>
                     <Typography component="p">
-                        ID: {call._id.$oid ? call._id.$oid : "NONE"}
+                        ID: {(call._id.$oid ? call._id.$oid : call._id) ? (call._id.$oid ? call._id.$oid : call._id) : "NONE"}
                     </Typography>
                     <Typography component="p">
                         {call.description}
@@ -126,7 +126,6 @@ export default function SearchResults(props) {
 
         (async () => {
             const response = await getCalls();
-
             //To negate multiple sessions if they exist due to multiple re-renders
             if (active) {
                 setCalls(response);
@@ -144,7 +143,7 @@ export default function SearchResults(props) {
             <div className={classes.root}>
                 <GridList cellHeight={160} className={classes.gridList} cols={4}>
                     {toDisplay.map(function (d, idx) {
-                        return (<GridListTile key={d._id.$oid} cols={1}> <SearchResult call={d} editCall={props.editCall} /> </GridListTile>)
+                        return (<GridListTile key={d._id.$oid ? d._id.$oid : d._id} cols={1}> <SearchResult call={d} editCall={props.editCall} /> </GridListTile>)
                     })}
                 </GridList>
             </div>
