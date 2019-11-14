@@ -99,7 +99,7 @@ export default function Register() {
     const valid = validate();
     if(!valid)return;
     try{
-      const res = await LifeSaverClient.signUp(firstName, lastName, email,role, password);
+      const res = await LifeSaverClient.signUp(firstName, lastName, email, role, password);
 
       console.log(res);
       if(res.error){
@@ -187,11 +187,11 @@ export default function Register() {
                 value={role}
                 onChange={handleChange}
               >
-                <MenuItem value={'first responder'}>First Responder</MenuItem>
-                <MenuItem value={'volunteer'}>Volunteer</MenuItem>
-                <MenuItem value={'mission management'}>Mission Managment</MenuItem>
-                <MenuItem value={'operation cheif'}>Operation Cheif</MenuItem>
-                <MenuItem value={'call specialist'}>Call Specialist</MenuItem>
+                <MenuItem value={1}>First Responder</MenuItem>
+                <MenuItem value={2}>Volunteer</MenuItem>
+                <MenuItem value={3}>Mission Managment</MenuItem>
+                <MenuItem value={4}>Operation Cheif</MenuItem>
+                <MenuItem value={5}>Call Specialist</MenuItem>
               </Select>
             </Grid>
             <Grid item xs={12}>
