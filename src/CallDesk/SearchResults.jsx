@@ -83,33 +83,49 @@ function SearchResult(props) {
     const classes = useStyles();
     const call = props.call;
     const themeMatcher = {
-        "wolf" : wolfTheme,
-        "tiger" : tigerTheme,
-        "demon" : demonTheme,
-        "dragon" : dragonTheme,
-        "god" : godTheme
+        "wolf": wolfTheme,
+        "tiger": tigerTheme,
+        "demon": demonTheme,
+        "dragon": dragonTheme,
+        "god": godTheme
     }
     const myTheme = themeMatcher[call.priority.toLowerCase()]
 
     return (
         <MuiThemeProvider theme={myTheme}>
-        <Card className={classes.card}>
-            <CardActionArea onClick={() => props.editCall(call)}>
-                <CardContent>
-                    <Typography variant="h5" component="h3">
-                        {call.title}
-                    </Typography>
-                    <Typography component="p">
-                        ID: {call._id.$oid ? call._id.$oid : "NONE"}
-                    </Typography>
-                    <Typography component="p">
-                        {call.description}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
+            <Card className={classes.card}>
+                <CardActionArea onClick={() => props.editCall(call)}>
+                    <CardContent>
+                        <Typography variant="h5" component="h3">
+                            {call.title}
+                        </Typography>
+                        <Typography component="p">
+                            ID: {call.id}
+                        </Typography>
+                        <Typography component="p">
+                            {call.description}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         </MuiThemeProvider>
     );
+}
+
+export function filterCalls(calls) {
+    let filteredCalls = [];
+    calls.forEach((call) => {
+        if (call.title != undefined) {
+            if (call._id)
+                if (call._id.$oid)
+                    call.id = call._id.$oid;
+                else
+                    call.id = call._id;
+            filteredCalls.push(call);
+        }
+    });
+
+    return filteredCalls;
 }
 
 export default function SearchResults(props) {
@@ -129,7 +145,7 @@ export default function SearchResults(props) {
 
             //To negate multiple sessions if they exist due to multiple re-renders
             if (active) {
-                setCalls(response);
+                setCalls(filterCalls(response));
             }
         })();
 
@@ -141,12 +157,12 @@ export default function SearchResults(props) {
     //We use a regex for matching, but this could cause problems with special characters.
     const toDisplay = props.query == "" ? [] : calls.filter((call) => call.title.toLowerCase().indexOf(props.query.toLowerCase()) != -1);
     return (
-            <div className={classes.root}>
-                <GridList cellHeight={160} className={classes.gridList} cols={4}>
-                    {toDisplay.map(function (d, idx) {
-                        return (<GridListTile key={d._id.$oid} cols={1}> <SearchResult call={d} editCall={props.editCall} /> </GridListTile>)
-                    })}
-                </GridList>
-            </div>
+        <div className={classes.root}>
+            <GridList cellHeight={160} className={classes.gridList} cols={4}>
+                {toDisplay.map(function (d, idx) {
+                    return (<GridListTile key={d.id} cols={1}> <SearchResult call={d} editCall={props.editCall} /> </GridListTile>)
+                })}
+            </GridList>
+        </div>
     );
 }

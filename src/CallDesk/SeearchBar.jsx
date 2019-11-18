@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import { getCalls } from "../Client/LifeSaverClient";
+import { filterCalls } from "./SearchResults"
 
 function renderInputComponent(inputProps) {
     const { classes, inputRef = () => { }, ref, ...other } = inputProps;
@@ -167,9 +168,9 @@ export default function IntegrationAutosuggest(props) {
 
         (async () => {
             const response = await getCalls();
-            //await sleep(1e3); // For demo purposes.
 
-            const labels = response.map(obj => obj.title);
+            const calls = filterCalls(response);
+            const labels = calls.map(obj => obj.title);
             const labelSet = [...new Set(labels)];
             const toDisplay = labelSet.map(label => { return { label: label }; })
             console.log(toDisplay);
@@ -201,9 +202,9 @@ export default function IntegrationAutosuggest(props) {
             <Grid
                 justify="space-between"
                 container
-                spacing={24}
+                spacing={0}
             >
-                <Grid   item  xs={11}>
+                <Grid item  xs={11}>
 
 
                     <Autosuggest
