@@ -4,7 +4,7 @@ import {
     Switch,
     Route
   } from "react-router-dom";
-import { CssBaseline } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import CallForm from './CallDesk/CallForm';
 import MissionView from './Mission/MissionView';
 import CallEvent from './FirstResponder/CallEvent';

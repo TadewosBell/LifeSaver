@@ -45,6 +45,6 @@ class HomePage extends Component {
     </React.Fragment>
     );
   }
-}
+}34
 
 export default (HomePage);
