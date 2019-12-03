@@ -127,13 +127,7 @@ const CallForm = (props) => {
     copy.location = { address, coordinates, details };
     let toSubmit = JSON.stringify(copy, null, 2)
     const ticketId = await postCall(toSubmit);
-    alert(ticketId);
-    try {
-      alert(toSubmit);
-    }
-    catch (e) {
-      alert(e)
-    }
+    alert(`The id of submitted call: ${ticketId}`);
     setSubmitting(false);
     updateDatabase();
   }
@@ -176,6 +170,7 @@ const CallForm = (props) => {
               .required('Required'),
             callerPhoneNumber: Yup.string()
               .required('Required')
+              .min(2)
           })}
         >
           {props => {
@@ -343,7 +338,7 @@ const CallForm = (props) => {
                         margin="normal"
                         required
                       />
-
+                      
                       <MuiPhoneNumber
                         id="callerPhoneNumber"
                         defaultCountry={'us'}
@@ -355,6 +350,8 @@ const CallForm = (props) => {
                         label="Caller's Phone Number"
                         margin="normal"
                         required
+                        autoFormat={false}
+                        error={errors.callerPhoneNumber && touched.callerPhoneNumber}
                       />
                     </Box>
                     <Box>

@@ -70,7 +70,7 @@ const priorities = [
     'Demon',
     'Dragon',
     'God'
-  ]
+]
 
 const categories = [
     '',
@@ -129,13 +129,7 @@ const CallEditForm = (props) => {
         copy.location = { address, coordinates, details };
         let toSubmit = copy;
         //let toSubmit = JSON.stringify(copy, null, 2)
-        await updateCall(props.call._id.$oid, toSubmit);
-        try {
-            alert(toSubmit);
-        }
-        catch (e) {
-            alert(e)
-        }
+        await updateCall(props.call.id, toSubmit);
         setSubmitting(false);
         resetForm(values);
         setOldValues(values);
@@ -149,7 +143,7 @@ const CallEditForm = (props) => {
         <div className="call-form">
             <Container>
                 <Formik
-                    enableReinitialize 
+                    enableReinitialize
                     initialValues={{
                         title: call.title,
                         description: call.description,
@@ -363,6 +357,8 @@ const CallEditForm = (props) => {
                                                 label="Caller's Phone Number"
                                                 margin="normal"
                                                 required
+                                                autoFormat={false}
+                                                error={errors.callerPhoneNumber && touched.callerPhoneNumber}
                                             />
                                         </Box>
                                         <Box>
@@ -404,7 +400,7 @@ const CallEditForm = (props) => {
                                             <Button
                                                 className={classes.button}
                                                 type="button"
-                                                onClick={()=>resetForm(oldValues)}
+                                                onClick={() => resetForm(oldValues)}
                                                 disabled={!dirty || isSubmitting}
                                                 variant="contained"
                                             >
