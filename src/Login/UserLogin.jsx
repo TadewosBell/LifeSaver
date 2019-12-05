@@ -34,6 +34,14 @@ function Copyright() {
   );
 }
 
+function getHomepage(role) {
+  if (role== "First Responder") {return "/FirstResponder";}
+  else if(sessionStorage.getItem('jwt_token') == "Volunteer"){return "/FirstResponder";}
+  else if(sessionStorage.getItem('jwt_token') == "Mission Managment"){return "/MissionManagement";}
+  else if(sessionStorage.getItem('jwt_token') == "Operations Chief"){return "/OperationsChief";}
+  else if(sessionStorage.getItem('jwt_token') == "Call Specialist"){ return "/CallCenter";}
+}
+
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
@@ -90,7 +98,7 @@ export default function UserLogin() {
           console.log(res.access_token);
           sessionStorage.setItem('jwt_token', res.access_token);
           sessionStorage.setItem("loggedIn", true)
-          
+          //window.location.assign(getHomepage());
         }
       }
       catch(err){
