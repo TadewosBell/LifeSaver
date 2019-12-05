@@ -60,7 +60,7 @@ export const addCallToMissionEpic = action$ => action$.pipe(
     ofType(ADD_CALL_TO_MISSION),
     mergeMap(action =>
         from(addCallToMissionPromise(action.mission, action.call)).pipe(
-            map(updateUnassignedCalls)
+            map(getUnassignedCalls)
         )
     )
 );
@@ -70,7 +70,7 @@ export const removeCallFromMissionEpic = action$ => action$.pipe(
     mergeMap(action =>
         from(removeCallFromMissionPromise(action.mission, action.call)).pipe(
             delay(100),
-            map(updateUnassignedCalls)
+            map(getUnassignedCalls)
         )
     )
 );
