@@ -20,6 +20,12 @@ import {ErrorSnackbar, ERROR_SNACKBAR} from "../common/SnackbarTypes"
 import { useDispatch } from 'react-redux'
 import { showSnackbar } from '../redux/modules/snackbar';
 import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
+import {loginsession} from '../redux/modules/session'
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  token: state.session.token
+});
 
 function Copyright() {
   return (
@@ -59,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserLogin() {
+function UserLogin({token}) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [email, setEmail] = useState("");
@@ -139,7 +145,7 @@ export default function UserLogin() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(event)=> signIn(event)}
+            onClick={(e)=> {e.preventDefault();dispatch(loginsession(email,password))}}
           >
             Sign In
           </Button>
@@ -160,3 +166,5 @@ export default function UserLogin() {
     </Container>
   );
 }
+
+export default connect(mapStateToProps)(UserLogin)
