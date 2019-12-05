@@ -5,7 +5,7 @@ import {
     Route
   } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import CallForm from './CallDesk/CallForm';
+import CallDeskPage from './CallDesk/CallDeskPage';
 import MissionView from './Mission/MissionView';
 import CallEvent from './FirstResponder/CallEvent';
 import './App.css';
@@ -29,7 +29,7 @@ function App() {
                         <UserLogin/>
                     </Route>
                     <Route path="/CallCenter">
-                        <CallForm />
+                        <CallDeskPage />
                     </Route>
                     <Route path="/OperationsChief">
                         <MissionView />

@@ -57,7 +57,8 @@ export async function getCall(id) {
 }
 
 export async function postCall(call) {
-    await request('POST', 'Calls', call);
+    const response = await request('POST', 'Calls', call);
+    return await response.json();
 }
 
 export async function updateCall(id, call) {

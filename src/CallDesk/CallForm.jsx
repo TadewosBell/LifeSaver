@@ -126,7 +126,8 @@ const CallForm = (props) => {
     //delete copy.coordinates;
     copy.location = { address, coordinates, details };
     let toSubmit = JSON.stringify(copy, null, 2)
-    await postCall(toSubmit);
+    const ticketId = await postCall(toSubmit);
+    alert(ticketId);
     try {
       alert(toSubmit);
     }
