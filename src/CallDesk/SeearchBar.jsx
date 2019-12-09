@@ -221,7 +221,7 @@ export default function IntegrationAutosuggest(props) {
                             classes,
                             id: 'react-autosuggest-popper',
                             label: 'Search',
-                            placeholder: 'Enter Title...',
+                            placeholder: 'Enter Title or ID...',
                             value: state.popper,
                             onChange: handleChange('popper'),
                             inputRef: node => {

@@ -6,7 +6,7 @@ export default function CallPreview(props) {
     return (
         <Card style={{width:'100%'}}>
             <Typography style={{ padding: 10 }}>{data.priority}</Typography>
-            <CardHeader title={data.title} subheader={new Date(data.timeReceived).toString()}/>
+            <CardHeader title={data.title} subheader={new Date(data.timeReceived.$date).toLocaleString()}/>
             <CardActions>{additionalActions}</CardActions>
         </Card>
     );
