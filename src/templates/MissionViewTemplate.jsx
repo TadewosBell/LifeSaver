@@ -5,13 +5,16 @@ import { useDispatch } from 'react-redux'
 import { getCallsForMission  } from '../redux/modules/server';
 import { makeStyles, Button, List, ListItem, ListItemText, ListSubheader, Grid, Typography } from '@material-ui/core';
 
+import { sortCallsByPriority } from "../common/CallHelpers";
+
+
 const useStyles = makeStyles({
     column: {
         maxHeight: '100vh',
         maxWidth: '100vw'
     },
     list: {
-      maxHeight: '100%',
+      maxHeight: '600px', //100%
       overflow: 'auto',
     },
     callPreview: {
@@ -32,7 +35,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, addCall
     });
 
     function addButton(callId) {
-        return <Button size="small" variant="contained" color="primary" onClick={() => addCall(missions[selectedIndex]._id.$oid, callId)}>ADD</Button>;
+        return <Button size="small" variant="outlined" style={{backgroundColor: '#ffffff'}} onClick={() => addCall(missions[selectedIndex]._id.$oid, callId)}>ADD</Button>;
     }
 
     return (
@@ -52,7 +55,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, addCall
             <Grid item xs className={classes.column}>
                 <Typography variant="h5" component="h2" align="center">Unassigned Calls</Typography>
                 <List className={classes.list}> 
-                {unassignedCalls && unassignedCalls.map(x =>
+                {unassignedCalls && sortCallsByPriority(unassignedCalls).map(x =>
                     <ListItem>
                         <CallPreview className={classes.callPreview} data={x} additionalActions={addButton(x._id)} />
                     </ListItem>)}

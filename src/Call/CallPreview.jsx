@@ -16,6 +16,9 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import CloudQueueIcon from '@material-ui/icons/CloudQueue';
 
+import { toPriorityName } from "../common/CallHelpers";
+
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -93,7 +96,7 @@ export default function CallPreview(props) {
                 subheader={
                     <Box >
                         <Typography component="p" >ID: {data._id}</Typography>
-                        <Typography component="p" >{new Date(data.timeReceived.$date).toLocaleString()}</Typography>
+                        <Typography component="p" style={{ fontSize: 12 }}>{new Date(data.timeReceived.$date).toLocaleString()}</Typography>
                     </Box>
                 }
             />
@@ -106,7 +109,7 @@ export default function CallPreview(props) {
                         Status: {!data.resolved ? "Open" : "Resolved"}
                     </Typography>
                     <Typography component="p" style={{ fontSize: 12 }}>
-                        Priority: {data.priority}
+                        Priority: {toPriorityName(data.priority)}
                     </Typography>
                     <Typography component="p" style={{ fontSize: 12 }}>
                         Category: {data.category}
