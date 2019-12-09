@@ -116,11 +116,11 @@ function SearchResult(props) {
         "god": classes.godCard
     }
     const iconMatcher = {
-        "flood": <InvertColorsIcon/>,
-        "tornado": <CloudQueueIcon/>,
-        "electrical":<FlashOnIcon/>,
-        "fire": <WhatshotIcon/>,
-        "earthquake": <WavesIcon/>
+        "flood": <InvertColorsIcon style={{ fontSize: 30 }}/>,
+        "tornado": <CloudQueueIcon style={{ fontSize: 30 }}/>,
+        "electrical":<FlashOnIcon style={{ fontSize: 30 }}/>,
+        "fire": <WhatshotIcon style={{ fontSize: 30 }}/>,
+        "earthquake": <WavesIcon style={{ fontSize: 30 }}/>
     }
     const myClass = themeMatcher[call.priority.toLowerCase()]
     const myIcon = iconMatcher[call.category.toLowerCase()];
@@ -132,7 +132,10 @@ function SearchResult(props) {
                     title={<Typography variant="h5" component="h3">{call.title}</Typography>}
                     subheader={<Typography component="p">ID: {call.id}</Typography>}
                 />
-                <CardContent>
+                <CardContent style={{paddingTop: 0}}>
+                     <Typography component="p" fontStyle="italic">
+                        {new Date(call.timeReceived.$date).toLocaleString()}
+                    </Typography>
                     <Typography component="p" fontStyle="italic">
                         {call.description}
                     </Typography>
