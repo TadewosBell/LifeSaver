@@ -20,6 +20,13 @@ import yellow from '@material-ui/core/colors/yellow';
 import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
 
+import WavesIcon from '@material-ui/icons/Waves';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import CloudQueueIcon from '@material-ui/icons/CloudQueue';
+import { CardHeader } from '@material-ui/core';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -32,11 +39,30 @@ const useStyles = makeStyles(theme => ({
         width: 1000,
         // height: 450,
     },
-    card: {
+    wolfCard: {
         //maxWidth: 500,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: blue[600],
         color: theme.palette.primary.contrastText
-
+    },
+    tigerCard: {
+        //maxWidth: 500,
+        backgroundColor: green[600],
+        color: theme.palette.primary.contrastText
+    },
+    demonCard: {
+        //maxWidth: 500,
+        backgroundColor: yellow[600],
+        color: theme.palette.primary.contrastText
+    },
+    dragonCard: {
+        //maxWidth: 500,
+        backgroundColor: orange[600],
+        color: theme.palette.primary.contrastText
+    },
+    godCard: {
+        //maxWidth: 500,
+        backgroundColor: red[600],
+        color: theme.palette.primary.contrastText
     },
     media: {
         height: 140,
@@ -83,32 +109,36 @@ function SearchResult(props) {
     const classes = useStyles();
     const call = props.call;
     const themeMatcher = {
-        "wolf": wolfTheme,
-        "tiger": tigerTheme,
-        "demon": demonTheme,
-        "dragon": dragonTheme,
-        "god": godTheme
+        "wolf": classes.wolfCard,
+        "tiger": classes.tigerCard,
+        "demon": classes.demonCard,
+        "dragon": classes.dragonCard,
+        "god": classes.godCard
     }
-    const myTheme = themeMatcher[call.priority.toLowerCase()]
-
+    const iconMatcher = {
+        "flood": <InvertColorsIcon/>,
+        "tornado": <CloudQueueIcon/>,
+        "electrical":<FlashOnIcon/>,
+        "fire": <WhatshotIcon/>,
+        "earthquake": <WavesIcon/>
+    }
+    const myClass = themeMatcher[call.priority.toLowerCase()]
+    const myIcon = iconMatcher[call.category.toLowerCase()];
     return (
-        <MuiThemeProvider theme={myTheme}>
-            <Card className={classes.card}>
-                <CardActionArea onClick={() => props.editCall(call)}>
-                    <CardContent>
-                        <Typography variant="h5" component="h3">
-                            {call.title}
-                        </Typography>
-                        <Typography component="p">
-                            ID: {call.id}
-                        </Typography>
-                        <Typography component="p">
-                            {call.description}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </MuiThemeProvider>
+        <Card className={myClass}>
+            <CardActionArea onClick={() => props.editCall(call)}>
+                <CardHeader
+                    avatar={myIcon}
+                    title={<Typography variant="h5" component="h3">{call.title}</Typography>}
+                    subheader={<Typography component="p">ID: {call.id}</Typography>}
+                />
+                <CardContent>
+                    <Typography component="p" fontStyle="italic">
+                        {call.description}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card >
     );
 }
 
