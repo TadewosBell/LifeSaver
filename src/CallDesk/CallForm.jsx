@@ -18,7 +18,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiPhoneNumber from 'material-ui-phone-number'
 import Container from '@material-ui/core/Container';
-
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Box from '@material-ui/core/Box';
 
 
@@ -126,6 +127,7 @@ const CallForm = (props) => {
     //delete copy.coordinates;
     copy.location = { address, coordinates, details };
     let toSubmit = JSON.stringify(copy, null, 2)
+    alert(toSubmit);
     const ticketId = await postCall(toSubmit);
     alert(`The id of submitted call: ${ticketId}`);
     setSubmitting(false);
@@ -149,7 +151,8 @@ const CallForm = (props) => {
             //y_coord: null,
             locationDetails: '',
             callerName: '',
-            callerPhoneNumber: ''
+            callerPhoneNumber: '',
+            resolved: false
           }}
           onSubmit={submitFunc}
           validationSchema={Yup.object().shape({
@@ -388,32 +391,49 @@ const CallForm = (props) => {
                         style={{ margin: 8 }}
                       />
                     </Box>
+                    <Grid container>
+                      <Grid item container xs={9} alignItems="center">
+                        <Button 
+                          className={classes.button}
+                          type="button"
+                          onClick={handleReset}
+                          disabled={!dirty || isSubmitting}
+                          variant="contained"
+                        >
+                          Reset
+                        </Button>
 
-                    <Grid container alignItems="center">
-                      <Button
-                        className={classes.button}
-                        type="button"
-                        onClick={handleReset}
-                        disabled={!dirty || isSubmitting}
-                        variant="contained"
-                      >
-                        Reset
-              </Button>
+                        <Button
+                          className={classes.button}
+                          type="submit"
+                          disabled={isSubmitting}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Submit
+                        </Button>
 
-                      <Button
-                        className={classes.button}
-                        type="submit"
-                        disabled={isSubmitting}
-                        variant="contained"
-                        color="primary"
-                      >
-                        Submit
-              </Button>
-                      {isSubmitting ? (
-                        <CircularProgress className={classes.progress} size={24} />
-                      ) : (
-                          <div />
+                        {isSubmitting ? (
+                          <CircularProgress className={classes.progress} size={24} />
+                        ) : (
+                            <div />
                         )}
+                      </Grid>
+                      <Grid item xs={3}>
+                        <FormControlLabel 
+                            control={
+                              <Switch 
+                                id="resolved"
+                                color="primary" 
+                                checked={values.resolved}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              />
+                            }
+                            label="Resolved"
+                            labelPlacement="start"                          
+                          />
+                      </Grid>
                     </Grid>
                   </Box>
 

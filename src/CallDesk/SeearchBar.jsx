@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -198,8 +199,15 @@ export default function IntegrationAutosuggest(props) {
     };
 
     return (
-        <form className={classes.root} action="#" onSubmit={() => { props.onSearch(state.popper) }}>
-            <Grid
+        <Formik
+        initialValues={{ firstName: '', lastName: '', email: '' }}
+        onSubmit={(values, { setSubmitting }) => {
+            props.onSearch(state.popper)
+            setSubmitting(false);
+        }}
+      >
+        <Form>
+        <Grid
                 justify="space-between"
                 container
                 spacing={0}
@@ -247,7 +255,7 @@ export default function IntegrationAutosuggest(props) {
                     </Button>
                 </Grid>
             </Grid>
-
-        </form>
+        </Form>
+      </Formik>
     );
 }

@@ -54,7 +54,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, addCall
                 <List className={classes.list}> 
                 {unassignedCalls && unassignedCalls.map(x =>
                     <ListItem>
-                        <CallPreview className={classes.callPreview} data={x} additionalActions={addButton(x._id.$oid)} />
+                        <CallPreview className={classes.callPreview} data={x} additionalActions={addButton(x._id)} />
                     </ListItem>)}
                 </List>
             </Grid>

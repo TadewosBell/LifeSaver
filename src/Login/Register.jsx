@@ -190,7 +190,7 @@ export default function Register() {
                 <MenuItem value={1}>First Responder</MenuItem>
                 <MenuItem value={2}>Volunteer</MenuItem>
                 <MenuItem value={3}>Mission Managment</MenuItem>
-                <MenuItem value={4}>Operations Chief</MenuItem>
+                <MenuItem value={4}>Operation Cheif</MenuItem>
                 <MenuItem value={5}>Call Specialist</MenuItem>
               </Select>
             </Grid>
