@@ -8,7 +8,8 @@ import { startWith } from 'rxjs/operators';
 const mapStateToProps = state => {
     return {
         missions: state.server.missions,
-        unassignedCalls: state.server.unassignedCalls
+        unassignedCalls: state.server.unassignedCalls,
+        unassignedUsers: state.server.unassignedUsers
     }
 }
 
