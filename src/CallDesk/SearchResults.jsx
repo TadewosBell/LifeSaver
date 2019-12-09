@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import red from '@material-ui/core/colors/red';
 import orange from '@material-ui/core/colors/orange';
@@ -45,38 +45,28 @@ const useStyles = makeStyles(theme => ({
 
 const wolfTheme = createMuiTheme({
     palette: {
-        primary: {
-            main: blue[500],
-        },
+        primary: blue
     }
 });
 
 const tigerTheme = createMuiTheme({
     palette: {
-        primary: {
-            main: green[500],
-        },
+        primary: green
     }
 });
 const demonTheme = createMuiTheme({
     palette: {
-        primary: {
-            main: yellow[500],
-        },
+        primary: yellow
     }
 });
 const dragonTheme = createMuiTheme({
     palette: {
-        primary: {
-            main: orange[500],
-        },
+        primary: orange
     }
 });
 const godTheme = createMuiTheme({
     palette: {
-        primary: {
-            main: red[500],
-        },
+        primary: red
     }
 });
 function SearchResult(props) {
@@ -92,7 +82,7 @@ function SearchResult(props) {
     const myTheme = themeMatcher[call.priority.toLowerCase()]
 
     return (
-        <MuiThemeProvider theme={myTheme}>
+        <ThemeProvider theme={myTheme}>
             <Card className={classes.card}>
                 <CardActionArea onClick={() => props.editCall(call)}>
                     <CardContent>
@@ -108,7 +98,7 @@ function SearchResult(props) {
                     </CardContent>
                 </CardActionArea>
             </Card>
-        </MuiThemeProvider>
+        </ThemeProvider>
     );
 }
 
@@ -155,7 +145,7 @@ export default function SearchResults(props) {
     }, [counter]); //"true" makes sure that we never refetch the component.
 
     //We use a regex for matching, but this could cause problems with special characters.
-    const toDisplay = props.query == "" ? [] : calls.filter((call) => call.title.toLowerCase().indexOf(props.query.toLowerCase()) != -1);
+    const toDisplay = props.query == "" ? [] : calls.filter((call) => call.title.toLowerCase().indexOf(props.query.toLowerCase()) != -1 || String(call.id) == props.query);
     return (
         <div className={classes.root}>
             <GridList cellHeight={160} className={classes.gridList} cols={4}>
