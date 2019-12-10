@@ -14,7 +14,7 @@ export default function MissionEditable({ data }) {
     function toCallItem(call) {
         return (
             <Grid item>
-                <CallPreview data={call} additionalActions={removeButton(call._id.$oid)}/>
+                <CallPreview data={call} additionalActions={removeButton(call._id)}/>
             </Grid>
         );
     }

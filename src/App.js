@@ -1,7 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './App.css';
-import LandingPage from './Home/LandingPage';
 import { Provider } from "react-redux";
 import store from "./redux/configureStore";
 import { interval } from 'rxjs';

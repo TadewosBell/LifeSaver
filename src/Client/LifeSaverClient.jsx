@@ -1,6 +1,6 @@
 const LIFESAVER_ENDPOINTS = {
     DEV_ENV: 'http://localhost:5000/', //https://cors-anywhere.herokuapp.com/
-    PROD_ENV: '',
+    PROD_ENV: 'https://umbclifesaver.herokuapp.com/',
 };
   
 const CURRENT_ENDPOINT = LIFESAVER_ENDPOINTS.DEV_ENV;
@@ -24,11 +24,12 @@ async function request(method, path, jsonData) {
     return await fetch(url, requestInfo);
 }
 
-export async function signUp(firstName, lastName, email, password){
+export async function signUp(firstName, lastName, email,role, password){
     const postData = {
         firstName,
         lastName,
         email,
+        role,
         password
     }
     const response = await request('POST', 'SignUp', postData);
@@ -56,7 +57,8 @@ export async function getCall(id) {
 }
 
 export async function postCall(call) {
-    await request('POST', 'Calls', call);
+    const response = await request('POST', 'Calls', call);
+    return await response.json();
 }
 
 export async function updateCall(id, call) {
@@ -83,6 +85,11 @@ export async function postMission(mission) {
 
 export async function deleteMission(id) {
     await request('DELETE', `Missions/${id}`);
+}
+
+export async function getUsers() {
+    const response = await request('GET', 'Users');
+    return await response.json();
 }
 
 export async function getCallsForMission(id) {

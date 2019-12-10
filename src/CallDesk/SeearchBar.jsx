@@ -1,4 +1,5 @@
 import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -13,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
 import { getCalls } from "../Client/LifeSaverClient";
+import { filterCalls } from "./SearchResults"
 
 function renderInputComponent(inputProps) {
     const { classes, inputRef = () => { }, ref, ...other } = inputProps;
@@ -167,9 +169,9 @@ export default function IntegrationAutosuggest(props) {
 
         (async () => {
             const response = await getCalls();
-            //await sleep(1e3); // For demo purposes.
 
-            const labels = response.map(obj => obj.title);
+            const calls = filterCalls(response);
+            const labels = calls.map(obj => obj.title);
             const labelSet = [...new Set(labels)];
             const toDisplay = labelSet.map(label => { return { label: label }; })
             console.log(toDisplay);
@@ -197,13 +199,20 @@ export default function IntegrationAutosuggest(props) {
     };
 
     return (
-        <form className={classes.root} action="#" onSubmit={() => { props.onSearch(state.popper) }}>
-            <Grid
+        <Formik
+        initialValues={{ firstName: '', lastName: '', email: '' }}
+        onSubmit={(values, { setSubmitting }) => {
+            props.onSearch(state.popper)
+            setSubmitting(false);
+        }}
+      >
+        <Form>
+        <Grid
                 justify="space-between"
                 container
-                spacing={24}
+                spacing={0}
             >
-                <Grid   item  xs={11}>
+                <Grid item  xs={11}>
 
 
                     <Autosuggest
@@ -212,7 +221,7 @@ export default function IntegrationAutosuggest(props) {
                             classes,
                             id: 'react-autosuggest-popper',
                             label: 'Search',
-                            placeholder: 'Enter Title...',
+                            placeholder: 'Enter Title or ID...',
                             value: state.popper,
                             onChange: handleChange('popper'),
                             inputRef: node => {
@@ -246,7 +255,7 @@ export default function IntegrationAutosuggest(props) {
                     </Button>
                 </Grid>
             </Grid>
-
-        </form>
+        </Form>
+      </Formik>
     );
 }
