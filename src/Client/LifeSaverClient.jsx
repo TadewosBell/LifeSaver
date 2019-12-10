@@ -87,6 +87,11 @@ export async function deleteMission(id) {
     await request('DELETE', `Missions/${id}`);
 }
 
+export async function getUsers() {
+    const response = await request('GET', 'Users');
+    return await response.json();
+}
+
 export async function getCallsForMission(id) {
     const response = await request('GET', `Missions/Calls/${id}`);
     return await response.json();
@@ -98,4 +103,17 @@ export async function addCallToMission(missionId, callId) {
 
 export async function removeCallFromMission(missionId, callId) {
     await request('DELETE', `Missions/Calls?mission=${missionId}&call=${callId}`);
+}
+
+export async function getUsersForMission(id) {
+    const response = await request('GET', `Missions/Users/${id}`);
+    return await response.json();
+}
+
+export async function addUserToMission(missionId, userEmail) {
+    await request('POST', `Missions/Users?mission=${missionId}&user=${userEmail}`);
+}
+
+export async function removeUserFromMission(missionId, userEmail) {
+    await request('DELETE', `Missions/Users?mission=${missionId}&user=${userEmail}`);
 }
