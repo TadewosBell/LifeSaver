@@ -14,6 +14,8 @@ import { Provider } from "react-redux";
 import store from "./redux/configureStore";
 import UserLogin from './Login/UserLogin';
 import Register from './Login/Register';
+import Logout from './Login/Logout';
+
 
 function App() {
   return (
@@ -30,12 +32,15 @@ function App() {
                     </Route>
                     <Route path="/CallCenter">
                         <CallDeskPage />
+                        <Logout/>
                     </Route>
                     <Route path="/OperationsChief">
                         <MissionView />
+                        <Logout/>
                     </Route>
                     <Route path="/FirstResponder">
                         <CallEvent />
+                        <Logout/>
                     </Route>
                     <Route path="/">
                         <UserLogin/>
