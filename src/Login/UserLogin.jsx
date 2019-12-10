@@ -20,6 +20,7 @@ import {ErrorSnackbar, ERROR_SNACKBAR} from "../common/SnackbarTypes"
 import { useDispatch } from 'react-redux'
 import { showSnackbar } from '../redux/modules/snackbar';
 import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
+import icon from "../Login/icon.png"
 
 function Copyright() {
   return (
@@ -112,9 +113,8 @@ export default function UserLogin() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <img src={icon} width="72" height="72" />
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
