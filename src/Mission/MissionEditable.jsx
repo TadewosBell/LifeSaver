@@ -1,8 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
 import { Card, CardHeader, Grid, CardContent, Button } from '@material-ui/core';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
 import CallPreview from '../Call/CallPreview'
 import { removeCallFromMission  } from '../redux/modules/server';
 
@@ -18,9 +16,9 @@ export default function MissionEditable({ data }) {
 
     function toCallItem(call) {
         return (
-            <GridListTile key={call._id} cols={1}>
+            <Grid item>
                 <CallPreview data={call} additionalActions={removeButton(call._id)}/>
-            </GridListTile>
+            </Grid>
         );
     }
 
@@ -28,9 +26,7 @@ export default function MissionEditable({ data }) {
         <Card>
             <CardHeader title={data.title}/>
             <CardContent style={{maxHeight: '600px', overflow: 'auto'}}>
-            <GridList cellHeight={300} cols={3}>
-            {data.calls && sortCallsByPriority([...data.calls]).map(toCallItem)}
-            </GridList>
+                <Grid container spacing={3}>{data.calls && sortCallsByPriority([...data.calls]).map(toCallItem)}</Grid>
             </CardContent>
         </Card>
     );
