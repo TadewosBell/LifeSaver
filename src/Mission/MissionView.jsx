@@ -4,6 +4,7 @@ import MissionViewTemplate from '../templates/MissionViewTemplate';
 import { addCallToMission, getMissions, getUnassignedCalls } from '../redux/modules/server'
 import { interval } from 'rxjs';
 import { startWith } from 'rxjs/operators';
+import { GlobalTimer } from '../App'
 
 const mapStateToProps = state => {
     return {
@@ -27,9 +28,7 @@ const MissionView = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const updater = interval(100000).pipe(
-            startWith(0)
-        ).subscribe(() => {
+        const updater = GlobalTimer.subscribe(() => {
             dispatch(getMissions());
             dispatch(getUnassignedCalls());
         });

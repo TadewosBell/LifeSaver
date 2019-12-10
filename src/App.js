@@ -9,11 +9,14 @@ import CallDeskPage from './CallDesk/CallDeskPage';
 import MissionView from './Mission/MissionView';
 import CallEvent from './FirstResponder/CallEvent';
 import './App.css';
-import LandingPage from './Home/LandingPage';
 import { Provider } from "react-redux";
 import store from "./redux/configureStore";
 import UserLogin from './Login/UserLogin';
 import Register from './Login/Register';
+import { interval } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+
+export const GlobalTimer = interval(30000).pipe(startWith(0));
 
 function App() {
   return (
