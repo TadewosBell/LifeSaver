@@ -15,6 +15,7 @@ import UserLogin from './Login/UserLogin';
 import Register from './Login/Register';
 import { interval } from 'rxjs';
 import { startWith } from 'rxjs/operators';
+import Logout from './Login/Logout';
 
 export const GlobalTimer = interval(30000).pipe(startWith(0));
 
@@ -33,12 +34,15 @@ function App() {
                     </Route>
                     <Route path="/CallCenter">
                         <CallDeskPage />
+                        <Logout/>
                     </Route>
                     <Route path="/OperationsChief">
                         <MissionView />
+                        <Logout/>
                     </Route>
                     <Route path="/FirstResponder">
                         <CallEvent />
+                        <Logout/>
                     </Route>
                     <Route path="/">
                         <UserLogin/>

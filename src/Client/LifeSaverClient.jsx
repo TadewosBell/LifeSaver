@@ -1,6 +1,6 @@
 const LIFESAVER_ENDPOINTS = {
     DEV_ENV: 'http://localhost:5000/', //https://cors-anywhere.herokuapp.com/
-    PROD_ENV: '',
+    PROD_ENV: 'https://umbclifesaver.herokuapp.com/',
 };
   
 const CURRENT_ENDPOINT = LIFESAVER_ENDPOINTS.DEV_ENV;

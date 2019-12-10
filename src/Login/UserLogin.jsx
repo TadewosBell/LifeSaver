@@ -20,6 +20,7 @@ import {ErrorSnackbar, ERROR_SNACKBAR} from "../common/SnackbarTypes"
 import { useDispatch } from 'react-redux'
 import { showSnackbar } from '../redux/modules/snackbar';
 import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
+import icon from "../Login/icon.png"
 
 function Copyright() {
   return (
@@ -32,6 +33,16 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+function getHomepage(user) {
+  var userjson = JSON.parse(user)
+  if (userjson.isFirstResponder) {return "/firstresponder";}
+  else if(userjson.isVolunteer){return "/firstresponder";}
+  else if(userjson.isMissionManagement){return "/MissionManagement";}
+  else if(userjson.isOperationsChief){return "/Operationschief";}
+  else if(userjson.isCallSpecialist){ return "/CallCenter";}
+  else { return "/Login";}
 }
 
 const useStyles = makeStyles(theme => ({
@@ -90,7 +101,7 @@ export default function UserLogin() {
           console.log(res.access_token);
           sessionStorage.setItem('jwt_token', res.access_token);
           sessionStorage.setItem("loggedIn", true)
-          
+          window.location.assign(getHomepage(res.user));
         }
       }
       catch(err){
@@ -102,9 +113,8 @@ export default function UserLogin() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <img src={icon} width="72" height="72" />
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>

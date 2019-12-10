@@ -18,6 +18,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiPhoneNumber from 'material-ui-phone-number'
 import Container from '@material-ui/core/Container';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import Box from '@material-ui/core/Box';
 
@@ -70,7 +72,7 @@ const priorities = [
     'Demon',
     'Dragon',
     'God'
-  ]
+]
 
 const categories = [
     '',
@@ -129,13 +131,7 @@ const CallEditForm = (props) => {
         copy.location = { address, coordinates, details };
         let toSubmit = copy;
         //let toSubmit = JSON.stringify(copy, null, 2)
-        await updateCall(props.call._id.$oid, toSubmit);
-        try {
-            alert(toSubmit);
-        }
-        catch (e) {
-            alert(e)
-        }
+        await updateCall(props.call.id, toSubmit);
         setSubmitting(false);
         resetForm(values);
         setOldValues(values);
@@ -149,7 +145,7 @@ const CallEditForm = (props) => {
         <div className="call-form">
             <Container>
                 <Formik
-                    enableReinitialize 
+                    enableReinitialize
                     initialValues={{
                         title: call.title,
                         description: call.description,
@@ -161,7 +157,8 @@ const CallEditForm = (props) => {
                         //y_coord: null,
                         locationDetails: call.location.details,
                         callerName: call.callerName,
-                        callerPhoneNumber: call.callerPhoneNumber
+                        callerPhoneNumber: call.callerPhoneNumber,
+                        resolved: call.resolved
                     }}
                     onSubmit={submitFunc}
                     validationSchema={Yup.object().shape({
@@ -363,6 +360,8 @@ const CallEditForm = (props) => {
                                                 label="Caller's Phone Number"
                                                 margin="normal"
                                                 required
+                                                autoFormat={false}
+                                                error={errors.callerPhoneNumber && touched.callerPhoneNumber}
                                             />
                                         </Box>
                                         <Box>
@@ -400,31 +399,49 @@ const CallEditForm = (props) => {
                                             />
                                         </Box>
 
-                                        <Grid container alignItems="center">
-                                            <Button
-                                                className={classes.button}
-                                                type="button"
-                                                onClick={()=>resetForm(oldValues)}
-                                                disabled={!dirty || isSubmitting}
-                                                variant="contained"
-                                            >
-                                                Reset
-              </Button>
+                                        <Grid container>
+                                            <Grid item container xs={9} alignItems="center">
+                                                <Button
+                                                    className={classes.button}
+                                                    type="button"
+                                                    onClick={handleReset}
+                                                    disabled={!dirty || isSubmitting}
+                                                    variant="contained"
+                                                >
+                                                    Reset
+                        </Button>
 
-                                            <Button
-                                                className={classes.button}
-                                                type="submit"
-                                                disabled={isSubmitting}
-                                                variant="contained"
-                                                color="primary"
-                                            >
-                                                UPDATE
-              </Button>
-                                            {isSubmitting ? (
-                                                <CircularProgress className={classes.progress} size={24} />
-                                            ) : (
-                                                    <div />
-                                                )}
+                                                <Button
+                                                    className={classes.button}
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                    variant="contained"
+                                                    color="primary"
+                                                >
+                                                    Submit
+                        </Button>
+
+                                                {isSubmitting ? (
+                                                    <CircularProgress className={classes.progress} size={24} />
+                                                ) : (
+                                                        <div />
+                                                    )}
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Switch
+                                                            id="resolved"
+                                                            color="primary"
+                                                            checked={values.resolved}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
+                                                        />
+                                                    }
+                                                    label="Resolved"
+                                                    labelPlacement="start"
+                                                />
+                                            </Grid>
                                         </Grid>
                                     </Box>
 
