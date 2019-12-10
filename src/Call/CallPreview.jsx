@@ -92,7 +92,7 @@ export default function CallPreview(props) {
         <Card style={{ width: '100%' }} className={myClass} align="left">
             <CardHeader
                 avatar={myIcon}
-                title={<Typography variant="h5" component="h3">{data.title}</Typography>}
+                title={<Typography variant="h5" component="h3" noWrap={true}>{data.title}</Typography>}
                 subheader={
                     <Box >
                         <Typography component="p" >ID: {data._id}</Typography>
