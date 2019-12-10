@@ -1,7 +1,7 @@
 import { from } from 'rxjs';
 import { map, mergeMap, delay, combineAll, flatMap } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { 
+import {
     getMissions as getMissionsPromise,
     getCalls as getCallsPromise,
     addCallToMission as addCallToMissionPromise,
@@ -38,7 +38,7 @@ export const updateCalls = (mission, calls) => ({ type: UPDATE_CALLS, mission, c
 export const addCallToMission = (mission, call) => ({ type: ADD_CALL_TO_MISSION, mission, call });
 export const removeCallFromMission = (mission, call) => ({ type: REMOVE_CALL_FROM_MISSION, mission, call });
 export const getUnassignedUsers = () => ({ type: GET_UNASSIGNED_USERS });
-export const updateUnassignedUsers = (unassignedUsers) => ({ type: UPDATE_UNASSIGNED_USERS, unassignedCalls: unassignedUsers });
+export const updateUnassignedUsers = (unassignedUsers) => ({ type: UPDATE_UNASSIGNED_USERS, unassignedUsers });
 export const getUsersForMission = (mission) => ({ type: GET_USERS_FOR_MISSION, mission });
 export const updateUsers = (mission, users) => ({ type: UPDATE_USERS, mission, calls: users });
 export const addUserToMission = (mission, user) => ({ type: ADD_USER_TO_MISSION, mission, call: user });
@@ -64,12 +64,12 @@ export const getUnassignedCallsEpic = action$ => action$.pipe(
 );
 
 export const getCallsForMissionEpic = action$ => action$.pipe(
-  ofType(GET_CALLS_FOR_MISSION),
-  mergeMap(action =>
-      from(getCallsForMissionPromise(action.mission)).pipe(
-          map(calls => updateCalls(action.mission, calls))
-      )
-  )
+    ofType(GET_CALLS_FOR_MISSION),
+    mergeMap(action =>
+        from(getCallsForMissionPromise(action.mission)).pipe(
+            map(calls => updateCalls(action.mission, calls))
+        )
+    )
 );
 
 export const addCallToMissionEpic = action$ => action$.pipe(
@@ -132,35 +132,35 @@ export const removeUserFromMissionEpic = action$ => action$.pipe(
 );
 
 const server = (state = {}, action) => {
-  switch (action.type) {
-    case UPDATE_MISSIONS:
-      return {
-        ...state,
-        missions: action.missions
-      };
-    case UPDATE_UNASSIGNED_CALLS:
-      return {
-        ...state,
-        unassignedCalls: action.unassignedCalls
-      };
-    case UPDATE_UNASSIGNED_USERS:
-        return {
-          ...state,
-          unassignedUsers: action.unassignedUsers
-        };
-    case UPDATE_CALLS:
-        return {
-            ...state,
-            missions: state.missions.map(x => x._id.$oid === action.mission ? {...x, calls: action.calls} : {...x})
-        };
-    case UPDATE_USERS:
-        return {
-            ...state,
-            missions: state.missions.map(x => x._id.$oid === action.mission ? {...x, users: action.users} : {...x})
-        };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case UPDATE_MISSIONS:
+            return {
+                ...state,
+                missions: action.missions
+            };
+        case UPDATE_UNASSIGNED_CALLS:
+            return {
+                ...state,
+                unassignedCalls: action.unassignedCalls
+            };
+        case UPDATE_UNASSIGNED_USERS:
+            return {
+                ...state,
+                unassignedUsers: action.unassignedUsers
+            };
+        case UPDATE_CALLS:
+            return {
+                ...state,
+                missions: state.missions.map(x => x._id.$oid === action.mission ? { ...x, calls: action.calls } : { ...x })
+            };
+        case UPDATE_USERS:
+            return {
+                ...state,
+                missions: state.missions.map(x => x._id.$oid === action.mission ? { ...x, users: action.users } : { ...x })
+            };
+        default:
+            return state;
+    }
 };
 
 export default server;

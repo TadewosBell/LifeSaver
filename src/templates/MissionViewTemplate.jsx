@@ -7,6 +7,7 @@ import { makeStyles, Button, List, ListItem, ListItemText, ListSubheader, Grid, 
 import UserPreview from '../User/UserPreview'
 
 import { sortCallsByPriority } from "../common/CallHelpers";
+import { sortUsersByRole } from '../common/UserHelpers';
 
 
 const useStyles = makeStyles({
@@ -69,7 +70,20 @@ export default function MissionViewTemplate({ missions, unassignedCalls, unassig
             <Grid item xs className={classes.column}>
                 <Typography variant="h5" component="h2" align="center">Unassigned Users</Typography>
                 <List className={classes.list}> 
-                {unassignedUsers && unassignedUsers.map(x =>
+                {/*unassignedUsers && unassignedUsers*/ 
+                    sortUsersByRole([{_id:"FIRSTRESPONDER",
+                    firstName:"b",
+                    lastName:"Doe",
+                    password:"1234",
+                    isFirstResponder:true}, {_id:"f",
+                    firstName:"a",
+                    lastName:"Doe",
+                    password:"1234",
+                    isVolunteer:true}, {_id:"a",
+                    firstName:"c",
+                    lastName:"Doe",
+                    password:"1234",
+                    isFirstResponder:true}]).map(x =>
                     <ListItem>
                         <UserPreview className={classes.callPreview} data={x} additionalActions={addUserButton(x._email)} />
                     </ListItem>)}

@@ -16,7 +16,7 @@ export default function MissionEditable({ data }) {
 
     function toCallItem(call) {
         return (
-            <Grid item>
+            <Grid item xs>
                 <CallPreview data={call} additionalActions={removeButton(call._id)}/>
             </Grid>
         );
@@ -26,7 +26,7 @@ export default function MissionEditable({ data }) {
         <Card>
             <CardHeader title={data.title}/>
             <CardContent style={{maxHeight: '600px', overflow: 'auto'}}>
-                <Grid container spacing={3}>{data.calls && sortCallsByPriority([...data.calls]).map(toCallItem)}</Grid>
+                <Grid container spacing={1}>{data.calls && sortCallsByPriority([...data.calls]).map(toCallItem)}</Grid>
             </CardContent>
         </Card>
     );
