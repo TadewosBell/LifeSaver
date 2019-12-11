@@ -47,9 +47,6 @@ function AppRouter({ token }) {
         </AppBar>
         <Router>
                 <Switch>
-                    <Route path="/Login/Register">
-                        <Register/>
-                    </Route>
                     <Route path="/CallCenter">
                         <CallDeskPage />
                     </Route>
@@ -66,6 +63,9 @@ function AppRouter({ token }) {
             </Router></div>) : 
             (<Router>
                 <Switch>
+                    <Route path="/Login/Register">
+                        <Register/>
+                    </Route>
                     <Route path="/">
                         <UserLogin/>
                     </Route>
