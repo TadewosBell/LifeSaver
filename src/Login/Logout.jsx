@@ -1,6 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { logoutsession } from '../redux/modules/session';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
@@ -31,16 +32,16 @@ const useStyles = makeStyles(theme => ({
 export default function Logout()
 {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     function signOut(){
+        dispatch(logoutsession());
         window.location.assign("/Login");
     }
     return(
     <Button
     type="submit"
-    fullWidth
-    variant="contained"
-    color="primary"
+    color="inherit"
     className={classes.submit}
     onClick={(event)=> signOut(event)}
   >

@@ -46,7 +46,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, unassig
                 <List className={classes.list} subheader={<ListSubheader>Missions</ListSubheader>}>
                     {missions && missions.map((x, i) =>
                     <ListItem button selected={selectedIndex === i} onClick={() => setSelectedIndex(i)}>
-                        <ListItemText primary={x.title} secondary={x.active ? "ACTIVE" : "INACTIVE"} />
+                        <ListItemText primary={x.title} />
                     </ListItem>)}
                 </List>
             </Grid>

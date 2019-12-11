@@ -117,3 +117,8 @@ export async function addUserToMission(missionId, userEmail) {
 export async function removeUserFromMission(missionId, userEmail) {
     await request('DELETE', `Missions/Users?mission=${missionId}&user=${userEmail}`);
 }
+
+export async function getCallForFirstResponder(userEmail) {
+    const response = await request('GET', `Users/Calls/${userEmail}`);
+    return await response.json();
+}
