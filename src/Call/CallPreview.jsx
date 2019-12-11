@@ -64,6 +64,31 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: red[600],
         color: theme.palette.primary.contrastText
     },
+    inactiveWolfCard: {
+        //maxWidth: 500,
+        backgroundColor: blue[200],
+        color: theme.palette.primary.contrastText
+    },
+    inactiveTigerCard: {
+        //maxWidth: 500,
+        backgroundColor: green[200],
+        color: theme.palette.primary.contrastText
+    },
+    inactiveDemonCard: {
+        //maxWidth: 500,
+        backgroundColor: yellow[200],
+        color: theme.palette.primary.contrastText
+    },
+    inactiveDragonCard: {
+        //maxWidth: 500,
+        backgroundColor: orange[200],
+        color: theme.palette.primary.contrastText
+    },
+    inactiveGodCard: {
+        //maxWidth: 500,
+        backgroundColor: red[200],
+        color: theme.palette.primary.contrastText
+    },
     disabledCard: {
         //maxWidth: 500,
         backgroundColor: grey[600],
@@ -98,6 +123,13 @@ export default function CallPreview(props) {
         "dragon": classes.dragonCard,
         "god": classes.godCard
     }
+    const inactiveThemeMatcher = {
+        "wolf": classes.inactiveWolfCard,
+        "tiger": classes.inactiveTigerCard,
+        "demon": classes.inactiveDemonCard,
+        "dragon": classes.inactiveDragonCard,
+        "god": classes.inactiveGodCard
+    }
     const iconMatcher = {
         "flood": <InvertColorsIcon style={{ fontSize: 30 }} />,
         "tornado": <CloudQueueIcon style={{ fontSize: 30 }} />,
@@ -106,6 +138,7 @@ export default function CallPreview(props) {
         "earthquake": <WavesIcon style={{ fontSize: 30 }} />
     }
     let myClass = themeMatcher[data.priority.toLowerCase()]
+    if (!data.active) myClass = inactiveThemeMatcher[data.priority.toLowerCase()]
     if (data.resolved) myClass = classes.disabledCard;
     const myIcon = iconMatcher[data.category.toLowerCase()];
 
