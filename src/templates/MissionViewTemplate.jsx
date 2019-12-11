@@ -95,7 +95,7 @@ function UserEdit(props) {
             <List className={classes.list}>
                 {unassignedUsers && unassignedUsers.map(x =>
                     <ListItem>
-                        <UserPreview className={classes.callPreview} data={x} additionalActions={addUserButton(x._email)} />
+                        <UserPreview className={classes.callPreview} data={x} additionalActions={addUserButton(x._id)} />
                     </ListItem>)}
             </List>
         </Grid>
@@ -124,7 +124,7 @@ function TabbedEdit(props) {
                 <CallEdit missions={missions} unassignedCalls={unassignedCalls} addCall={addCall} selectedIndex={selectedIndex}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <UserEdit missions={missions} unassignedUsers={unassignedUsers} addCall={addUser} selectedIndex={selectedIndex}/>
+                <UserEdit missions={missions} unassignedUsers={unassignedUsers} addUser={addUser} selectedIndex={selectedIndex}/>
             </TabPanel>
         </div>
     );
