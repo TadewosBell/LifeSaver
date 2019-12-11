@@ -7,16 +7,16 @@ const useStyles = makeStyles({
     }
 });
 
-export default function Location(props) {
+export default function Location({address, details, coordinates}) {
     const classes = useStyles();
 
     return (
         <Card className={classes.card}>
             <CardContent>
                 <Typography variant="h5" color="textSecondary" gutterBottom>Location</Typography>
-                <Typography variant="h6" gutterBottom>{props.address}</Typography>
-                <Typography variant="body1" gutterBottom>Details: {props.details}</Typography>
-                <MapWidget address={props.address}/>
+                <Typography variant="h6" gutterBottom>{address}</Typography>
+                <Typography variant="body1" gutterBottom>Details: {details}</Typography>
+                <MapWidget address={address}/>
             </CardContent>
         </Card>
     );

@@ -13,6 +13,7 @@ export default function CallerContact(props) {
         <Card className={classes.card}>
             <CardContent>
                 <Typography variant="h5" gutterBottom>Caller</Typography>
+                <Typography variant="body1" gutterBottom><b>Name: </b>{props.name}</Typography>
                 <Typography variant="body1" gutterBottom><b>Phone: </b>{props.phoneNumber}</Typography>
             </CardContent>
         </Card>

@@ -42,13 +42,13 @@ function CallEvent({ email }) {
             <Card>
                 <Priority level={state.priority}/>
                 <CardContent>
-                    <Typography variant="h4" gutterBottom>{state.title}<Service type={state.service}/></Typography>
-                    <DateTime dateTime={state.dateTime} />
+                    <Typography variant="h4" gutterBottom>{state.title}<Service type={state.category}/></Typography>
+                    <Typography>{new Date(state.timeReceived.$date).toLocaleString()}</Typography>
                     <Typography variant="body1">{state.description}</Typography>
                 </CardContent>
             </Card>
-            <Location address={state.address} details={state.locationDetails} />
-            <CallerContact phoneNumber={state.phoneNumber}/></div>)
+            <Location address={state.location.address} coordinates={state.location.coordinates} details={state.location.details} />
+            <CallerContact name={state.callerName} phoneNumber={state.callerPhoneNumber}/></div>)
         :
             (<Typography variant='h3'><br/>Could not find a call assigned to you.<br/><br/>Please contact your supervisor if you are expecting one.</Typography>)
 
