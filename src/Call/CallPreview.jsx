@@ -18,6 +18,14 @@ import CloudQueueIcon from '@material-ui/icons/CloudQueue';
 
 import { toPriorityName } from "../common/CallHelpers";
 
+import { Formik/*, yupToFormErrors*/ } from 'formik';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import { Field, Form, ErrorMessage } from 'formik';
+
+import { /*submitCall,*/ updateCall } from "../Client/LifeSaverClient";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -66,7 +74,20 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+function onActiveChange(){
+    //SHEA, PLEASE PUT YOUR STUFF HERE
+}
+
 export default function CallPreview(props) {
+
+    const submitFunc = async (values, { setSubmitting, resetForm }) => {
+        let copy = Object.assign({}, values)
+        let toSubmit = copy;
+        await updateCall(props.data.id, toSubmit);
+        setSubmitting(false);
+        console.log(values)
+    }
+
     const { data, additionalActions } = props;
 
     const classes = useStyles();
@@ -119,7 +140,21 @@ export default function CallPreview(props) {
                     </Typography>
                 </Box>
             </CardContent>
-            <CardActions>{additionalActions}</CardActions>
+            <Grid container>
+                <Grid item container xs={8} alignItems="left">
+                    <CardActions>{additionalActions}</CardActions>
+                </Grid>
+                <Grid item xs={4} alignItems="right">
+                     <Switch
+                        id="active"
+                        color="primary"
+                        checked={data.active}
+                        onChange={onActiveChange}
+                    />
+                </Grid>
+            </Grid>
+
         </Card>
+
     );
 }
