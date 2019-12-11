@@ -50,7 +50,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, unassig
                 <List className={classes.list} subheader={<ListSubheader>Missions</ListSubheader>}>
                     {missions && missions.map((x, i) =>
                     <ListItem button selected={selectedIndex === i} onClick={() => setSelectedIndex(i)}>
-                        <ListItemText primary={x.title} secondary={x.active ? "ACTIVE" : "INACTIVE"} />
+                        <ListItemText primary={x.title} />
                     </ListItem>)}
                 </List>
             </Grid>
@@ -70,20 +70,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, unassig
             <Grid item xs className={classes.column}>
                 <Typography variant="h5" component="h2" align="center">Unassigned Users</Typography>
                 <List className={classes.list}> 
-                {/*unassignedUsers && unassignedUsers*/ 
-                    sortUsersByRole([{_id:"FIRSTRESPONDER",
-                    firstName:"b",
-                    lastName:"Doe",
-                    password:"1234",
-                    isFirstResponder:true}, {_id:"f",
-                    firstName:"a",
-                    lastName:"Doe",
-                    password:"1234",
-                    isVolunteer:true}, {_id:"a",
-                    firstName:"c",
-                    lastName:"Doe",
-                    password:"1234",
-                    isFirstResponder:true}]).map(x =>
+                {unassignedUsers && unassignedUsers.map(x =>
                     <ListItem>
                         <UserPreview className={classes.callPreview} data={x} additionalActions={addUserButton(x._email)} />
                     </ListItem>)}

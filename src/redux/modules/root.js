@@ -9,15 +9,20 @@ import server, {
   removeCallFromMissionEpic
 } from './server'
 
+import session, {logInEpic} from './session';
+
+
 export const rootEpic = combineEpics(
   getMissionsEpic,
   getUnassignedCallsEpic,
   getCallsForMissionEpic,
   addCallToMissionEpic,
-  removeCallFromMissionEpic
+  removeCallFromMissionEpic, 
+  logInEpic
 );
 
 export const rootReducer = combineReducers({
   snackbar,
-  server
+  server, 
+  session
 });

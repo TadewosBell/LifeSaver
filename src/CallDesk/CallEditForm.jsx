@@ -159,7 +159,8 @@ const CallEditForm = (props) => {
                         locationDetails: call.location.details,
                         callerName: call.callerName,
                         callerPhoneNumber: call.callerPhoneNumber,
-                        resolved: call.resolved
+                        resolved: call.resolved,
+                        active: call.active
                     }}
                     onSubmit={submitFunc}
                     validationSchema={Yup.object().shape({
@@ -401,7 +402,7 @@ const CallEditForm = (props) => {
                                         </Box>
 
                                         <Grid container>
-                                            <Grid item container xs={9} alignItems="center">
+                                            <Grid item container xs={6} alignItems="center">
                                                 <Button
                                                     className={classes.button}
                                                     type="button"
@@ -440,6 +441,21 @@ const CallEditForm = (props) => {
                                                         />
                                                     }
                                                     label="Resolved"
+                                                    labelPlacement="start"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Switch
+                                                            id="active"
+                                                            color="primary"
+                                                            checked={values.active}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
+                                                        />
+                                                    }
+                                                    label="Active"
                                                     labelPlacement="start"
                                                 />
                                             </Grid>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +20,13 @@ import {ErrorSnackbar, ERROR_SNACKBAR} from "../common/SnackbarTypes"
 import { useDispatch } from 'react-redux'
 import { showSnackbar } from '../redux/modules/snackbar';
 import { SuccessSnackbar, SUCCESS_SNACKBAR } from '../common/SnackbarTypes';
+import {loginsession} from '../redux/modules/session'
+import { connect } from 'react-redux';
+import icon from "../Login/icon.png"
+
+const mapStateToProps = state => ({
+  token: state.session.token
+});
 
 function Copyright() {
   return (
@@ -69,7 +76,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserLogin() {
+function UserLogin({token}) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [email, setEmail] = useState("");
@@ -81,6 +88,11 @@ export default function UserLogin() {
   const handleClose = (event, reason) => {
 
   };
+
+  useEffect(() => {
+    if (token)
+      window.location.assign(getHomepage(token.user));
+  }, [token]);
 
 
 
@@ -112,9 +124,8 @@ export default function UserLogin() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <img src={icon} width="72" height="72" />
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -149,7 +160,10 @@ export default function UserLogin() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(event)=> signIn(event)}
+            onClick={(e)=> {
+              e.preventDefault();
+              dispatch(loginsession(email,password));
+            }}
           >
             Sign In
           </Button>
@@ -170,3 +184,5 @@ export default function UserLogin() {
     </Container>
   );
 }
+
+export default connect(mapStateToProps)(UserLogin)
