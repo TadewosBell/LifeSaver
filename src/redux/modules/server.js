@@ -111,14 +111,6 @@ export const getUnassignedUsersEpic = action$ => action$.pipe(
     )
 );
 
-export const getUsersForMissionEpic = action$ => action$.pipe(
-    ofType(GET_USERS_FOR_MISSION),
-    mergeMap(action =>
-        from(getUsersForMissionPromise(action.mission)).pipe(
-            map(users => updateUsers(action.mission, users))
-        )
-    )
-);
 
 export const addUserToMissionEpic = action$ => action$.pipe(
     ofType(ADD_USER_TO_MISSION),
@@ -140,41 +132,11 @@ export const removeUserFromMissionEpic = action$ => action$.pipe(
     )
 );
 
-export const getUnassignedUsersEpic = action$ => action$.pipe(
-    ofType(GET_UNASSIGNED_USERS),
-    mergeMap(() =>
-        from(getUsersPromise()).pipe(
-            map(x => x.filter(y => !y.mission)),
-            map(updateUnassignedUsers)
-        )
-    )
-);
-
 export const getUsersForMissionEpic = action$ => action$.pipe(
     ofType(GET_USERS_FOR_MISSION),
     mergeMap(action =>
         from(getUsersForMissionPromise(action.mission)).pipe(
             map(users => updateUsers(action.mission, users))
-        )
-    )
-);
-
-export const addUserToMissionEpic = action$ => action$.pipe(
-    ofType(ADD_USER_TO_MISSION),
-    mergeMap(action =>
-        from(addUserToMissionPromise(action.mission, action.call)).pipe(
-            delay(100),
-            map(getUnassignedCalls)
-        )
-    )
-);
-
-export const removeUserFromMissionEpic = action$ => action$.pipe(
-    ofType(REMOVE_USER_FROM_MISSION),
-    mergeMap(action =>
-        from(removeUserFromMissionPromise(action.mission, action.user)).pipe(
-            delay(100),
-            map(getUnassignedCalls)
         )
     )
 );
