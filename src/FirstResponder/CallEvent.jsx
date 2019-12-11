@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 function CallEvent({ email }) {
-    const [state, setState] = useState(null);
+    const [state, setState] = useState(undefined);
     
     useEffect(() => {
         getCall(email, setState);
@@ -37,8 +37,7 @@ function CallEvent({ email }) {
     
     return (
     <div>
-        {state ? 
-            (<div>
+        {state ? (<div>
             <Card>
                 <Priority level={state.priority}/>
                 <CardContent>
@@ -49,9 +48,9 @@ function CallEvent({ email }) {
             </Card>
             <Location address={state.location.address} coordinates={state.location.coordinates} details={state.location.details} />
             <CallerContact name={state.callerName} phoneNumber={state.callerPhoneNumber}/></div>)
-        :
+        : state === null ?
             (<Typography variant='h3'><br/>Could not find a call assigned to you.<br/><br/>Please contact your supervisor if you are expecting one.</Typography>)
-
+        :  (<Typography variant='h3'><br/>Loading . . .</Typography>)
         }
     </div>
     );

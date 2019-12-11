@@ -152,7 +152,8 @@ const CallForm = (props) => {
             locationDetails: '',
             callerName: '',
             callerPhoneNumber: '',
-            resolved: false
+            resolved: false,
+            active: false
           }}
           onSubmit={submitFunc}
           validationSchema={Yup.object().shape({
