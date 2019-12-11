@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Card, CardHeader, Typography, CardActions, Box } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
@@ -24,7 +25,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import { Field, Form, ErrorMessage } from 'formik';
 
-import { /*submitCall,*/ updateCall } from "../Client/LifeSaverClient";
+import { updateCall } from "../redux/modules/server";
 
 
 const useStyles = makeStyles(theme => ({
@@ -74,21 +75,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function onActiveChange(){
-    //SHEA, PLEASE PUT YOUR STUFF HERE
-}
+export default function CallPreview({data, additionalActions}) {
+    const dispatch = useDispatch();
 
-export default function CallPreview(props) {
-
-    const submitFunc = async (values, { setSubmitting, resetForm }) => {
-        let copy = Object.assign({}, values)
-        let toSubmit = copy;
-        await updateCall(props.data.id, toSubmit);
-        setSubmitting(false);
-        console.log(values)
+    function onActiveChange(){
+        dispatch(updateCall({...data, active: !data.active}));
     }
-
-    const { data, additionalActions } = props;
 
     const classes = useStyles();
     const themeMatcher = {

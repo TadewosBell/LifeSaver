@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux'
 import MissionViewTemplate from '../templates/MissionViewTemplate';
-import { addCallToMission, getMissions, getUnassignedCalls, getUnassignedUsers } from '../redux/modules/server'
+import { addCallToMission, getMissions, getUnassignedCalls, getUnassignedUsers, addUserToMission } from '../redux/modules/server'
 import { interval } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { GlobalTimer } from '../App'
@@ -18,6 +18,9 @@ const mapDispatchToProps = dispatch => {
     return {
         addCall: (mission, call) => {
             dispatch(addCallToMission(mission, call))
+        },
+        addUser: (mission, user) => {
+            dispatch(addUserToMission(mission, user))
         }
     }
 }

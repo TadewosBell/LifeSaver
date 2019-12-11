@@ -10,7 +10,8 @@ import {
     getUsers as getUsersPromise,
     addUserToMission as addUserToMissionPromise,
     removeUserFromMission as removeUserFromMissionPromise,
-    getUsersForMission as getUsersForMissionPromise
+    getUsersForMission as getUsersForMissionPromise,
+    updateCall as updateCallPromise
 } from '../../Client/LifeSaverClient';
 
 const GET_MISSIONS = 'LifeSaver/server/GET_MISSIONS';
@@ -31,6 +32,7 @@ const FAKE_ASSIGN_CALL = 'LifeSaver/server/FAKE_ASSIGN_CALL';
 const FAKE_REMOVE_CALL = 'LifeSaver/server/FAKE_REMOVE_CALL';
 const FAKE_ASSIGN_USER = 'LifeSaver/server/FAKE_ASSIGN_USER';
 const FAKE_REMOVE_USER = 'LifeSaver/server/FAKE_REMOVE_USER';
+const UPDATE_CALL = 'LifeSaver/server/UPDATE_CALL';
 
 
 
@@ -43,7 +45,7 @@ export const updateCalls = (mission, calls) => ({ type: UPDATE_CALLS, mission, c
 export const addCallToMission = (mission, call) => ({ type: ADD_CALL_TO_MISSION, mission, call });
 export const removeCallFromMission = (mission, call) => ({ type: REMOVE_CALL_FROM_MISSION, mission, call });
 export const getUnassignedUsers = () => ({ type: GET_UNASSIGNED_USERS });
-export const updateUnassignedUsers = (unassignedUsers) => ({ type: UPDATE_UNASSIGNED_USERS, unassignedCalls: unassignedUsers });
+export const updateUnassignedUsers = (unassignedUsers) => ({ type: UPDATE_UNASSIGNED_USERS, unassignedUsers });
 export const getUsersForMission = (mission) => ({ type: GET_USERS_FOR_MISSION, mission });
 export const updateUsers = (mission, users) => ({ type: UPDATE_USERS, mission, users });
 export const addUserToMission = (mission, user) => ({ type: ADD_USER_TO_MISSION, mission, user });
@@ -52,6 +54,7 @@ export const fakeAssignCall = (mission, call) => ({ type: FAKE_ASSIGN_CALL, miss
 export const fakeRemoveCall = (mission, call) => ({ type: FAKE_REMOVE_CALL, mission, call });
 export const fakeAssignUser = (mission, user) => ({ type: FAKE_ASSIGN_USER, mission, user });
 export const fakeRemoveUser = (mission, user) => ({ type: FAKE_REMOVE_USER, mission, user });
+export const updateCall = (call) => ({ type: UPDATE_CALL, call });
 
 export const getMissionsEpic = action$ => action$.pipe(
     ofType(GET_MISSIONS),
@@ -80,6 +83,15 @@ export const getCallsForMissionEpic = action$ => action$.pipe(
       )
   )
 );
+
+export const updateCallEpic = action$ => action$.pipe(
+    ofType(UPDATE_CALL),
+    mergeMap(action =>
+        from(updateCallPromise(action.call.id, action.call)).pipe(
+            map(() => getCallsForMission(action.call.mission.$oid))
+        )
+    )
+  );
 
 export const addCallToMissionEpic = action$ => action$.pipe(
     ofType(ADD_CALL_TO_MISSION),

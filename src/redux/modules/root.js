@@ -6,7 +6,12 @@ import server, {
   getUnassignedCallsEpic,
   getCallsForMissionEpic,
   addCallToMissionEpic,
-  removeCallFromMissionEpic
+  removeCallFromMissionEpic,
+  getUnassignedUsersEpic,
+  getUsersForMissionEpic,
+  addUserToMissionEpic,
+  removeUserFromMissionEpic,
+  updateCallEpic,
 } from './server'
 
 import session, {logInEpic} from './session';
@@ -18,7 +23,12 @@ export const rootEpic = combineEpics(
   getCallsForMissionEpic,
   addCallToMissionEpic,
   removeCallFromMissionEpic, 
-  logInEpic
+  logInEpic,
+  getUnassignedUsersEpic,
+  getUsersForMissionEpic,
+  addUserToMissionEpic,
+  removeUserFromMissionEpic,
+  updateCallEpic,
 );
 
 export const rootReducer = combineReducers({
