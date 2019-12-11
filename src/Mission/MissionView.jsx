@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux'
 import MissionViewTemplate from '../templates/MissionViewTemplate';
-import { addCallToMission, getMissions, getUnassignedCalls } from '../redux/modules/server'
+import { addCallToMission, getMissions, getUnassignedCalls, getUnassignedUsers } from '../redux/modules/server'
 import { interval } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 import { GlobalTimer } from '../App'
@@ -31,6 +31,7 @@ const MissionView = () => {
         const updater = GlobalTimer.subscribe(() => {
             dispatch(getMissions());
             dispatch(getUnassignedCalls());
+            dispatch(getUnassignedUsers());
         });
 
         return updater.unsubscribe;

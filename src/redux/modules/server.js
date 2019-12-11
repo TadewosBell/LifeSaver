@@ -1,7 +1,7 @@
 import { from } from 'rxjs';
 import { map, mergeMap, startWith } from 'rxjs/operators'
 import { ofType } from 'redux-observable'
-import { 
+import {
     getMissions as getMissionsPromise,
     getCalls as getCallsPromise,
     addCallToMission as addCallToMissionPromise,
@@ -136,6 +136,45 @@ export const removeUserFromMissionEpic = action$ => action$.pipe(
         from(removeUserFromMissionPromise(action.mission, action.user)).pipe(
             mergeMap(() => from([getUnassignedUsers(), getUsersForMission(action.mission)])),
             startWith(fakeRemoveUser(action.mission, action.user))
+        )
+    )
+);
+
+export const getUnassignedUsersEpic = action$ => action$.pipe(
+    ofType(GET_UNASSIGNED_USERS),
+    mergeMap(() =>
+        from(getUsersPromise()).pipe(
+            map(x => x.filter(y => !y.mission)),
+            map(updateUnassignedUsers)
+        )
+    )
+);
+
+export const getUsersForMissionEpic = action$ => action$.pipe(
+    ofType(GET_USERS_FOR_MISSION),
+    mergeMap(action =>
+        from(getUsersForMissionPromise(action.mission)).pipe(
+            map(users => updateUsers(action.mission, users))
+        )
+    )
+);
+
+export const addUserToMissionEpic = action$ => action$.pipe(
+    ofType(ADD_USER_TO_MISSION),
+    mergeMap(action =>
+        from(addUserToMissionPromise(action.mission, action.call)).pipe(
+            delay(100),
+            map(getUnassignedCalls)
+        )
+    )
+);
+
+export const removeUserFromMissionEpic = action$ => action$.pipe(
+    ofType(REMOVE_USER_FROM_MISSION),
+    mergeMap(action =>
+        from(removeUserFromMissionPromise(action.mission, action.user)).pipe(
+            delay(100),
+            map(getUnassignedCalls)
         )
     )
 );
