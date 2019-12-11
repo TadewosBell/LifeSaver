@@ -93,7 +93,7 @@ function UserEdit(props) {
         <Grid item xs className={classes.column}>
             <Typography variant="h5" component="h2" align="center">Unassigned Users</Typography>
             <List className={classes.list}>
-                {unassignedUsers && unassignedUsers.map(x =>
+                {unassignedUsers && sortUsersByRole(unassignedUsers).map(x =>
                     <ListItem>
                         <UserPreview className={classes.callPreview} data={x} additionalActions={addUserButton(x._id)} />
                     </ListItem>)}
@@ -148,6 +148,7 @@ export default function MissionViewTemplate({ missions, unassignedCalls, unassig
     return (
         <Grid container spacing={3} justify="space-evenly" alignItems="stretch">
             <Grid item xs={3} className={classes.column} maxHeight={1}>
+                <a href="callcenter">Edit calls >>></a>
                 <List className={classes.list} subheader={<ListSubheader>Missions</ListSubheader>}>
                     {missions && missions.map((x, i) =>
                         <ListItem button selected={selectedIndex === i} onClick={() => setSelectedIndex(i)}>
