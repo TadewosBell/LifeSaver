@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -89,6 +89,11 @@ function UserLogin({token}) {
 
   };
 
+  useEffect(() => {
+    if (token)
+      window.location.assign(getHomepage(token.user));
+  }, [token]);
+
 
 
  async function signIn(event){
@@ -155,7 +160,10 @@ function UserLogin({token}) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e)=> {e.preventDefault();dispatch(loginsession(email,password))}}
+            onClick={(e)=> {
+              e.preventDefault();
+              dispatch(loginsession(email,password));
+            }}
           >
             Sign In
           </Button>

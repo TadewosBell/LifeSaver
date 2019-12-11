@@ -11,37 +11,59 @@ import CallDeskPage from './CallDesk/CallDeskPage';
 import MissionView from './Mission/MissionView';
 import CallEvent from './FirstResponder/CallEvent';
 import Logout from './Login/Logout';
+import { Typography, Grid, AppBar } from '@material-ui/core';
+import icon from "./Login/icon.png"
 
 const mapStateToProps = state => ({
     token: state.session ? state.session.token : null
 });
 
+function getHomepage(user) {
+    if (user.isFirstResponder) {return (<CallEvent/>);}
+    else if(user.isVolunteer){return (<CallEvent/>);}
+    else if(user.isMissionManagement){return (<div/>);}
+    else if(user.isOperationsChief){return (<MissionView/>);}
+    else if(user.isCallSpecialist){ return (<CallDeskPage/>);}
+    else { return <div/>;}
+}
+
 function AppRouter({ token }) {
-    return token ? (<Router>
+    return token ? (
+    <div>
+        <AppBar position="static">
+            <Grid container spacing={2} alignItems="center">
+                <Grid item xs={2}>
+                    <img src={icon} width="72" height="72" />
+                </Grid>
+                <Grid item xs={8}>
+                    <Typography variant="h3" align="center">
+                        Life Saver
+                    </Typography> 
+                </Grid>
+                <Grid item xs={2}>
+                    <Logout/>
+                </Grid>
+            </Grid>
+        </AppBar>
+        <Router>
                 <Switch>
                     <Route path="/Login/Register">
                         <Register/>
                     </Route>
-                    <Route path="/Login">
-                        <UserLogin/>
-                    </Route>
                     <Route path="/CallCenter">
                         <CallDeskPage />
-                        <Logout/>
                     </Route>
                     <Route path="/OperationsChief">
                         <MissionView />
-                        <Logout/>
                     </Route>
                     <Route path="/FirstResponder">
                         <CallEvent />
-                        <Logout/>
                     </Route>
                     <Route path="/">
-                        <UserLogin/>
+                        {getHomepage(token.user)}                      
                     </Route>
                 </Switch>
-            </Router>) : 
+            </Router></div>) : 
             (<Router>
                 <Switch>
                     <Route path="/">

@@ -20,7 +20,7 @@ export const logInEpic = action$ => action$.pipe(
   ofType(LOG_IN),
   mergeMap(action =>
       from(signIn(action.email, action.password)).pipe(
-          map(updatetokensession)
+          map(x => updatetokensession({...x, user: JSON.parse(x.user)}))
       )
   )
 );

@@ -14,7 +14,7 @@ function App() {
     <Provider store={store()}>
         <div className="App">
             <CssBaseline />
-            <AppRouter />>
+            <AppRouter />
         </div>
     </Provider>
   );
