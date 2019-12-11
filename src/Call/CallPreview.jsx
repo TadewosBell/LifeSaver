@@ -136,14 +136,14 @@ export default function CallPreview({data, additionalActions}) {
                 <Grid item container xs={8} alignItems="left">
                     <CardActions>{additionalActions}</CardActions>
                 </Grid>
-                <Grid item xs={4} alignItems="right">
+                {/* <Grid item xs={4} alignItems="right">
                      <Switch
                         id="active"
                         color="primary"
                         checked={data.active}
                         onChange={onActiveChange}
                     />
-                </Grid>
+                </Grid> */}
             </Grid>
 
         </Card>
