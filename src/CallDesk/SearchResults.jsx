@@ -19,6 +19,7 @@ import orange from '@material-ui/core/colors/orange';
 import yellow from '@material-ui/core/colors/yellow';
 import green from '@material-ui/core/colors/green';
 import blue from '@material-ui/core/colors/blue';
+import grey from '@material-ui/core/colors/grey';
 
 import WavesIcon from '@material-ui/icons/Waves';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
@@ -62,6 +63,11 @@ const useStyles = makeStyles(theme => ({
     godCard: {
         //maxWidth: 500,
         backgroundColor: red[600],
+        color: theme.palette.primary.contrastText
+    },
+    disabledCard: {
+        //maxWidth: 500,
+        backgroundColor: grey[600],
         color: theme.palette.primary.contrastText
     },
     media: {
@@ -112,7 +118,8 @@ function SearchResult(props) {
         "fire": <WhatshotIcon style={{ fontSize: 30 }}/>,
         "earthquake": <WavesIcon style={{ fontSize: 30 }}/>
     }
-    const myClass = themeMatcher[call.priority.toLowerCase()]
+    let myClass = themeMatcher[call.priority.toLowerCase()]
+    if (call.resolved) myClass = classes.disabledCard;
     const myIcon = iconMatcher[call.category.toLowerCase()];
     return (
         <Card className={myClass}>

@@ -25,6 +25,9 @@ import Box from '@material-ui/core/Box';
 
 import MapWidget from "../common/Location";
 import { /*submitCall,*/ postCall } from "../Client/LifeSaverClient";
+import { toPriorityName } from "../common/CallHelpers";
+
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -295,7 +298,7 @@ const CallForm = (props) => {
                       >
                         {priorities.map(option => (
                           <MenuItem key={option} value={option}>
-                            {option}
+                            {toPriorityName(option)}
                           </MenuItem>
                         ))}
                       </TextField>
