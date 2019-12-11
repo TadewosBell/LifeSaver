@@ -8,6 +8,7 @@ import DateTime from "../common/DateTime";
 import CallerContact from "../common/CallerContact";
 import { getCallForFirstResponder } from '../Client/LifeSaverClient';
 import { GlobalTimer } from '../App'
+import { toPriorityName } from '../common/CallHelpers'
 
 async function getCall(email, setState) {
     try {
@@ -39,7 +40,7 @@ function CallEvent({ email }) {
     <div>
         {state ? (<div>
             <Card>
-                <Priority level={state.priority}/>
+                <Priority level={toPriorityName(state.priority)}/>
                 <CardContent>
                     <Typography variant="h4" gutterBottom>{state.title}<Service type={state.category}/></Typography>
                     <Typography>{new Date(state.timeReceived.$date).toLocaleString()}</Typography>
