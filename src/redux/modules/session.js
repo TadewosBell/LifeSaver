@@ -3,7 +3,7 @@ import { map, mergeMap, flatMap} from 'rxjs/operators'
 import { ofType } from 'redux-observable'
 import {signIn} from '../../Client/LifeSaverClient'
 import { showSnackbar } from './snackbar';
-import {SUCCESS_SNACKBAR } from '../../common/SnackbarTypes'
+import {SUCCESS_SNACKBAR, ERROR_SNACKBAR } from '../../common/SnackbarTypes'
 
 const LOG_IN = 'LifeSaver/session/LOG_IN';
 const LOG_OUT = 'LifeSaver/session/LOG_OUT';
@@ -20,7 +20,7 @@ export const logInEpic = action$ => action$.pipe(
   ofType(LOG_IN),
   mergeMap(action =>
       from(signIn(action.email, action.password)).pipe(
-          map(x => updatetokensession({...x, user: JSON.parse(x.user)}))
+          map(x => x.error ? showSnackbar(ERROR_SNACKBAR, x.error) : updatetokensession({...x, user: JSON.parse(x.user)}))
       )
   )
 );
